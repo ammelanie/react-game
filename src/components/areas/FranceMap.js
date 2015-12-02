@@ -5,12 +5,19 @@
 import React from 'react';
 import BigAreaMap from './BigAreaMap';
 
-export default class FranceMap extends React.Component {
+/**
+ * Classe représentant la carte de France
+ */
+class  FranceMap extends React.Component {
 
+    /**
+     * Création des 13 nouvelles régions de France
+     * @constructor
+     */
     constructor() {
         super();
 
-        // Définition des départements par même couleur de région
+        // Définition de chaque région comme un ensemble d'anciennes régions, de couleur et de capitale
         this.areas = [
             {
                 areas: [
@@ -212,11 +219,16 @@ export default class FranceMap extends React.Component {
         ]
     }
 
+    /**
+     * La vue correspond à la carte de France avec les nouvelles régions
+     * @returns {ReactElement}
+     */
     render() {
+
         var areas = [];
 
+        // Parcours des nouvelles régions pour pouvoir toutes les ajouter à la carte de France
         for (let key in this.areas) {
-
             let bigArea = this.areas[key];
 
             areas.push(
@@ -238,3 +250,5 @@ export default class FranceMap extends React.Component {
         );
     }
 }
+
+export default FranceMap;
