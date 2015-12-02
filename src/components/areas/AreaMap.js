@@ -6,30 +6,17 @@ import React from 'react';
 
 export default class AreaMap extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.name = props.name;
-        this.d = props.d;
-        this.stroke = props.stroke || "#000000";
-        this.strokeWidth = props.strokeWidth || 1;
-        this.strokeLinecap = props.strokeLinecap || "round";
-        this.strokeLinejoin = props.strokeLinejoin || "round";
-        this.strokeOpacity = props.strokeOpacity || 0.25;
-        this.fill = props.fill;
-        this.fillOpacity = props.fillOpacity || 1;
-    }
-
     render() {
         return (
-            <path d={this.d}
-                  stroke={this.stroke}
-                  strokeWidth={this.strokeWidth}
-                  strokeLinecap={this.strokeLinecap}
-                  strokeLinejoin={this.strokeLinejoin}
-                  strokeOpacity={this.strokeOpacity}
-                  fill={this.fill}
-                  fillOpacity={this.fillOpacity}>
+            <path
+                d={this.props.d}
+                stroke={this.props.stroke}
+                strokeWidth={this.props.strokeWidth}
+                strokeLinecap={this.props.strokeLinecap}
+                strokeLinejoin={this.props.strokeLinejoin}
+                strokeOpacity={this.props.strokeOpacity}
+                fill={this.props.fill}
+                fillOpacity={this.props.fillOpacity}>
             </path>
         );
     }
@@ -45,4 +32,13 @@ AreaMap.propTypes = {
     fill: React.PropTypes.string.isRequired,
     fillOpacity: React.PropTypes.number,
     name: React.PropTypes.string.isRequired
+};
+
+AreaMap.defaultProps = {
+    stroke: "#000000",
+    strokeWidth: 1,
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeOpacity: 0.25,
+    fillOpacity: 1
 };
