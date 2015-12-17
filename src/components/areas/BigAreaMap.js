@@ -4,6 +4,7 @@
 
 import React from 'react';
 import AreaMap from './AreaMap';
+import CityStore from '../../stores/CityStore';
 
 /**
  * Classe représentant une nouvelle région de France
@@ -16,7 +17,7 @@ class BigAreaMap extends React.Component {
      */
     render() {
 
-        var areas = []
+        var areas = [];
 
         // Parcours des anciennes régions pour pouvoir toutes les ajouter à la vue
         for (let key in this.props.areas) {
@@ -38,12 +39,14 @@ class BigAreaMap extends React.Component {
             );
         }
 
+        var capital = CityStore.findByName(this.props.capital);
+
         return (
             <g>
                 {areas}
                 <circle r="5"
-                        cx={this.props.capital.coordinateX}
-                        cy={this.props.capital.coordinateY}
+                        cx={capital.coordinateX}
+                        cy={capital.coordinateY}
                         stroke="black"
                         strokeWidth="1"
                         fill="red"
@@ -60,10 +63,10 @@ export default BigAreaMap;
  * @type {object}
  * @property {array}  areas             - Required          - tableau d'objet représentant des {@link AreaMap} - sans l'attribut fill
  * @property {string} fill              - Required          - couleur de la région, reprise pour la création des {@link AreaMap} - champ fill (uniformisation)
- * @property {object} capital           - Required          - représentation de la capitale de la région. Required : name / coordinate X / coordinate Y
+ * @property {string} capital           - Required          - nom de la capitale de région
  */
 BigAreaMap.propTypes = {
     areas: React.PropTypes.array.isRequired,
     fill: React.PropTypes.string.isRequired,
-    capital: React.PropTypes.object.isRequired
+    capital: React.PropTypes.string.isRequired
 };
