@@ -5,6 +5,7 @@
 import React from 'react';
 
 import AreaMap from './AreaMap';
+import Path from '../Path';
 import City from '../City';
 
 import CityStore from '../../stores/CityStore';
@@ -15,7 +16,7 @@ import CityStore from '../../stores/CityStore';
 class BigAreaMap extends React.Component {
 
     /**
-     * La vue correspond aux nouvelles régions, composés de l'ensemble des petites régions et de la ville capitale
+     * La vue correspond aux nouvelles régions, composés de l'ensemble des petites régions, de la ville capitale et des chemins
      * @returns {ReactElement}
      */
     render() {
@@ -44,6 +45,25 @@ class BigAreaMap extends React.Component {
 
         var capital = CityStore.findByName(this.props.capital);
 
+        var paths = [];
+
+        // Parcours de l'ensemble des villes liées à notre capital afin de construire les chemins
+        for (let key in capital.linkedTo) {
+            let capitalLinkedTo = capital.linkedTo[key];
+
+            let cityLinked = CityStore.findByName(capitalLinkedTo);
+
+            paths.push(
+                <Path
+                    key={key}
+                    x1={capital.coordinateX}
+                    y1={capital.coordinateY}
+                    x2={cityLinked.coordinateX}
+                    y2={cityLinked.coordinateY}
+                />
+            );
+        }
+
         return (
             <g>
                 {areas}
@@ -51,6 +71,7 @@ class BigAreaMap extends React.Component {
                     cx={capital.coordinateX}
                     cy={capital.coordinateY}
                 />
+                {paths}
             </g>
         );
     }
