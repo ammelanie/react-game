@@ -3,7 +3,10 @@
  */
 
 import React from 'react';
+
 import AreaMap from './AreaMap';
+import City from '../City';
+
 import CityStore from '../../stores/CityStore';
 
 /**
@@ -44,12 +47,9 @@ class BigAreaMap extends React.Component {
         return (
             <g>
                 {areas}
-                <circle r="5"
-                        cx={capital.coordinateX}
-                        cy={capital.coordinateY}
-                        stroke="black"
-                        strokeWidth="1"
-                        fill="red"
+                <City
+                    cx={capital.coordinateX}
+                    cy={capital.coordinateY}
                 />
             </g>
         );
