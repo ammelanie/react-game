@@ -70,6 +70,7 @@ class BigAreaMap extends React.Component {
                 <City
                     cx={capital.coordinateX}
                     cy={capital.coordinateY}
+                    fill={this.props.fill}
                 />
                 {paths}
             </g>

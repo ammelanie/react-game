@@ -32,9 +32,9 @@ export default City;
  * @property {number} r                 - Default 5         - rayon du cercle
  * @property {number} cx                - Required          - coordonnée X du centre du cercle
  * @property {number} cy                - Required          - coordonnée Y du centre du cercle
- * @property {string} stroke            - Default #000000   - couleur de la ligne de délimitation de la ville
- * @property {number} strokeWidth       - Default 2         - épaisseur de la ligne de délimitation de la ville
- * @property {string} fill              - Default black     - épaisseur de la ligne de délimitation de la ville
+ * @property {string} stroke            - Default red       - couleur de la ligne de délimitation de la ville
+ * @property {number} strokeWidth       - Default 1         - épaisseur de la ligne de délimitation de la ville
+ * @property {string} fill              - Required          - couleur de la ville : semblable à la région
  */
 City.propTypes = {
     r: React.PropTypes.number,
@@ -42,7 +42,7 @@ City.propTypes = {
     cy: React.PropTypes.number.isRequired,
     stroke: React.PropTypes.string,
     strokeWidth: React.PropTypes.number,
-    fill: React.PropTypes.string
+    fill: React.PropTypes.string.isRequired
 };
 
 /**
@@ -50,7 +50,6 @@ City.propTypes = {
  */
 City.defaultProps = {
     r: 5,
-    stroke: "#000000",
-    strokeWidth: 1,
-    fill: "red"
+    stroke: "red",
+    strokeWidth: 1
 };
