@@ -15,6 +15,14 @@ import CityStore from '../../stores/CityStore';
 class BigAreaMap extends React.Component {
 
     /**
+     * Callback appelé par le composant City lors d'un clic sur ce dernier
+     * @param cityName  nom de la cité cliqué
+     */
+    toggleActivationPathFor(cityName) {
+        this.props.toggleActivationPathFor(cityName);
+    }
+
+    /**
      * La vue correspond aux nouvelles régions, composés de l'ensemble des petites régions, de la ville capitale et des chemins
      * @returns {ReactElement}
      */
@@ -51,7 +59,8 @@ class BigAreaMap extends React.Component {
                     cx={capital.coordinateX}
                     cy={capital.coordinateY}
                     fill={this.props.fill}
-                    linkedTo={capital.linkedTo}
+                    toggleActivationPathFor={this.toggleActivationPathFor.bind(this)}
+                    name={this.props.capital}
                 />
             </g>
         );
@@ -66,9 +75,11 @@ export default BigAreaMap;
  * @property {array}  areas             - Required          - tableau d'objet représentant des {@link AreaMap} - sans l'attribut fill
  * @property {string} fill              - Required          - couleur de la région, reprise pour la création des {@link AreaMap} - champ fill (uniformisation)
  * @property {string} capital           - Required          - nom de la capitale de région
+ * @property {func} toggleActivationPathFor - Required      - callback à appeler lors d'un clic sur une ville
  */
 BigAreaMap.propTypes = {
     areas: React.PropTypes.array.isRequired,
     fill: React.PropTypes.string.isRequired,
-    capital: React.PropTypes.string.isRequired
+    capital: React.PropTypes.string.isRequired,
+    toggleActivationPathFor: React.PropTypes.func.isRequired
 };

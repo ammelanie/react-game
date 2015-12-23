@@ -21,68 +21,55 @@ class CityStore extends EventEmitter {
             {
                 "Rennes": {
                     coordinateX: 120,
-                    coordinateY: 160,
-                    linkedTo: ["Rouen", "Nantes", "Paris"]
+                    coordinateY: 160
                 },
                 "Rouen": {
                     coordinateX: 240,
-                    coordinateY: 90,
-                    linkedTo: ["Rennes", "Lille"]
+                    coordinateY: 90
                 },
                 "Paris": {
                     coordinateX: 300,
-                    coordinateY: 143,
-                    linkedTo: ["Lille", "Rennes", "Strasbourg", "Orléans", "Dijon"]
+                    coordinateY: 143
                 },
                 "Lille": {
                     coordinateX: 328,
-                    coordinateY: 25,
-                    linkedTo: ["Rouen", "Paris", "Strasbourg"]
+                    coordinateY: 25
                 },
                 "Strasbourg": {
                     coordinateX: 515,
-                    coordinateY: 150,
-                    linkedTo: ["Paris", "Lille", "Dijon"]
+                    coordinateY: 150
                 },
                 "Lyon": {
                     coordinateX: 400,
-                    coordinateY: 330,
-                    linkedTo: ["Dijon", "Bordeaux", "Marseille"]
+                    coordinateY: 330
                 },
                 "Dijon": {
                     coordinateX: 390,
-                    coordinateY: 230,
-                    linkedTo: ["Lyon", "Paris", "Strasbourg"]
+                    coordinateY: 230
                 },
                 "Marseille": {
                     coordinateX: 400,
-                    coordinateY: 480,
-                    linkedTo: ["Ajaccio", "Toulouse", "Lyon"]
+                    coordinateY: 480
                 },
                 "Ajaccio": {
                     coordinateX: 495,
-                    coordinateY: 550,
-                    linkedTo: ["Marseille"]
+                    coordinateY: 550
                 },
                 "Toulouse": {
                     coordinateX: 220,
-                    coordinateY: 450,
-                    linkedTo: ["Marseille", "Bordeaux"]
+                    coordinateY: 450
                 },
                 "Bordeaux": {
                     coordinateX: 140,
-                    coordinateY: 350,
-                    linkedTo: ["Nantes", "Orléans", "Lyon", "Toulouse"]
+                    coordinateY: 350
                 },
                 "Orléans": {
                     coordinateX: 270,
-                    coordinateY: 190,
-                    linkedTo: ["Paris", "Bordeaux"]
+                    coordinateY: 190
                 },
                 "Nantes": {
                     coordinateX: 120,
-                    coordinateY: 220,
-                    linkedTo: ["Rennes", "Bordeaux"]
+                    coordinateY: 220
                 }
         };
     }
