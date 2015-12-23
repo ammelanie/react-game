@@ -4,7 +4,7 @@
 
 import React from 'react';
 import BigAreaMap from './BigAreaMap';
-import AreaStore from '../../stores/AreaStores';
+import AreaStore from '../../stores/AreaStore';
 
 /**
  * Classe représentant la carte de France
