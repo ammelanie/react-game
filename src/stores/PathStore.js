@@ -6,6 +6,8 @@
 
 import EventEmitter from 'events';
 
+import {GameConstants} from '../constants/GameConstants';
+
 /**
  * Représente le store des chemins
  */
@@ -82,6 +84,38 @@ class PathStore extends EventEmitter {
     getAll() {
         return this._paths;
     }
+
+    /**
+     * Permet de rechercher, parmi tous les chemins, les chemins à activer pour la ville donnée en paramètre
+     * @param cityName      nom de la ville dont on cherche les chemins accessibles
+     * @param paths         l'ensemble des chemins existants
+     * @param cpt           compteur de récursivité
+     * @returns {Array}     l'ensemble des chemisn à activer pour cette ville
+     */
+    searchPathsToActivate(cityName, paths, cpt = 0) {
+
+        var pathsToActivate = [];
+
+        cpt++;
+
+        for ( let path of paths ) {
+
+            // Si le chemin est concerné on devra l'activer
+            if ( ( path.cityA === cityName || path.cityB === cityName ) && cpt <= GameConstants.NUMBER_OF_ALLOWED_ACTIONS) {
+
+                pathsToActivate.push(path);
+
+                // Determination de la ville qu'il faut par la suite analyser
+                var cityToTest = ( path.cityA === cityName ) ? path.cityB : path.cityA;
+
+                // Ajout des chemins trouvés pour la nouvelle ville
+                pathsToActivate = pathsToActivate.concat(this.searchPathsToActivate(cityToTest, paths, cpt));
+            }
+        }
+
+        return pathsToActivate;
+    }
+
 
 }
 
