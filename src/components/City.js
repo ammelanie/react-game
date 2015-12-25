@@ -6,6 +6,8 @@ import React from 'react';
 
 import CityStore from '../stores/CityStore';
 
+import GameActions from '../actions/GameActions';
+
 /**  Classe représentant une ville */
 class City extends React.Component {
 
@@ -13,7 +15,7 @@ class City extends React.Component {
      * Callback appelé au clic sur une ville
      */
     handleClick() {
-        this.props.toggleActivationPathFor(this.props.name);
+        GameActions.togglePathsForCity(this.props.name);
     }
 
     /**
@@ -47,7 +49,6 @@ export default City;
  * @property {string} stroke                    - Default red       - couleur de la ligne de délimitation de la ville
  * @property {number} strokeWidth               - Default 1         - épaisseur de la ligne de délimitation de la ville
  * @property {string} fill                      - Required          - couleur de la ville : semblable à la région
- * @property {func} toggleActivationPathFor     - Required          - callback a appelé au clic d'une ville
  * @property {string} name                      - Required          - nom de la ville
  */
 City.propTypes = {
@@ -57,7 +58,6 @@ City.propTypes = {
     stroke: React.PropTypes.string,
     strokeWidth: React.PropTypes.number,
     fill: React.PropTypes.string.isRequired,
-    toggleActivationPathFor: React.PropTypes.func.isRequired,
     name: React.PropTypes.string.isRequired
 };
 

@@ -4,13 +4,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FranceMap from './components/areas/FranceMap';
+import Game from './components/Game';
 
 (function() {
     'use strict';
 
     ReactDOM.render(
-        <FranceMap />,
+        <Game />,
         document.getElementById('main-container')
     );
 })();
