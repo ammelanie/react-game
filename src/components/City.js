@@ -12,22 +12,13 @@ import GameActions from '../actions/GameActions';
 class City extends React.Component {
 
     /**
-     * Callback appelé au clic sur une ville
-     * Appelle une fonction permettant d'envoyer l'information de changement au Store adéquat
-     * Le but étant de mettre à jour l'affichage des chemins de la carte
-     */
-    handleClick() {
-        GameActions.togglePathsForCity(this.props.name);
-    }
-
-    /**
      * La vue correspond à la ville souhaitée
      * @returns {ReactElement}
      */
     render() {
         return (
             <g>
-                <circle onClick={this.handleClick.bind(this)}
+                <circle
                     r={this.props.r}
                     cx={this.props.cx}
                     cy={this.props.cy}

@@ -9,8 +9,20 @@ import React from 'react';
 import CityStore from '../../stores/CityStore';
 import PlayerStore from '../../stores/PlayerStore';
 
+import GameActions from '../../actions/GameActions';
+
 /**  Classe représentant un joueur du jeu */
 class Player extends React.Component {
+
+
+    /**
+     * Callback appelé au clic sur une ville
+     * Appelle une fonction permettant d'envoyer l'information de changement au Store adéquat
+     * Le but étant de mettre à jour l'affichage des chemins de la carte
+     */
+    handleClick() {
+        GameActions.togglePathsForCity(this.props.cityName);
+    }
 
     /**
      * La vue correspond au joueur
@@ -22,6 +34,7 @@ class Player extends React.Component {
 
         return (
             <rect
+                onClick={this.handleClick.bind(this)}
                 width="15"
                 height="15"
                 fill={this.props.color}
