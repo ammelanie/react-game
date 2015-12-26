@@ -22,6 +22,32 @@ class Players extends React.Component {
 
         // Ajout de chacun des joueurs en tant qu'état
         this.state = {players: PlayerStore.getAll()};
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    /**
+     * Callback appelé lorsque le store des joueurs émet un changement
+     * Cela va mettre à jour l'état du composant et donc rafraichir l'ensemble des joueurs de la carte
+     */
+    onChange() {
+        this.setState({ players: PlayerStore.getAll() });
+    }
+
+    /**
+     * Callback déclenché lorsque le composant est monté
+     * Ajout d'un listener sur le store
+     */
+    componentDidMount() {
+        PlayerStore.addChangeListener(this.onChange);
+    }
+
+    /**
+     * Callback déblenché lorsque le composant est démonté
+     * Suppression d'un listener sur le store
+     */
+    componentWillUnmount() {
+        PlayerStore.removeChangeListener(this.onChange);
     }
 
     render() {
@@ -38,14 +64,15 @@ class Players extends React.Component {
                     name={player.name}
                     cityName={player.cityName}
                     color={player.color}
+                    selected={player.selected}
                 />
             );
         }
 
         return (
-            <g>
+            <div>
                 {players}
-            </g>
+            </div>
         );
     }
 }

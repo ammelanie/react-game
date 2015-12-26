@@ -34,16 +34,74 @@ class PlayerStore extends EventEmitter {
             }
         ];
 
-        // Ajout de la ville initiale à chacun des joueurs
+        // Ajout de la ville initiale à chacun des joueurs et d'une propriété de selection
         for (let player of this._players) {
             player.cityName = "Toulouse";
+            player.selected = false;
         }
     }
 
+    /**
+     * Récupère l'ensemble des joueurs
+     * @returns {Array}
+     */
     getAll() {
         return this._players;
+    }
+
+    /**
+     * Active l'état de selection du joueur passé en paramètre et désactive les autres
+     * @param name  nom du joueur
+     */
+    activatePlayer(name) {
+
+        for (let player of this._players) {
+            player.selected = (player.name === name);
+        }
+    }
+
+    /**
+     * Indique aux composants enregistrés qu'un changement a eu lieu au sein du store
+     */
+    emitChange() {
+        this.emit(GameDispatcher.ACTIVATE_PLAYER);
+    }
+
+    /**
+     * Enregistre un callback pour un composant qui sera déclenché lorsqu'un changement sera émi
+     * @param callback  fonction à appeler lors de l'ajout du listener
+     */
+    addChangeListener(callback) {
+        this.on(GameDispatcher.ACTIVATE_PLAYER, callback);
+    }
+
+    /**
+     * Supprime le callback d'un composant pour ne plus recevoir les changements émis
+     * @param callback  fonction à appeler lors de la suppression du listener
+     */
+    removeChangeListener(callback) {
+        this.removeListener(GameDispatcher.ACTIVATE_PLAYER, callback);
     }
 }
 
 let _PlayerStore = new PlayerStore();
 export default _PlayerStore;
+
+/**
+ * Enregistrement des actions à écouter en provenance du Dispatcher
+ */
+GameDispatcher.register((action) => {
+
+    switch(action.type) {
+
+        // Lorsque les joueurs doivent subir un changement d'état de selection
+        case GameConstants.ACTIVATE_PLAYER:
+
+            _PlayerStore.activatePlayer(action.playerName);
+            _PlayerStore.emitChange();
+            break;
+
+        default:
+            break;
+    }
+});

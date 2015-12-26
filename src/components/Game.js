@@ -19,11 +19,14 @@ class Game extends React.Component {
     render() {
 
         return (
-            <svg id="game-container" width="1000px" height="1000px">
-                <FranceMap />
-                <Paths />
+            <div>
+                <svg id="game-container" width="1000px" height="1000px">
+                    <FranceMap />
+                    <Paths />
+                </svg>
+
                 <Players />
-            </svg>
+            </div>
         );
     }
 }

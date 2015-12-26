@@ -7,7 +7,8 @@ export const GameConstants = {
 
 
     // Actions
-    TOGGLE_PATHS: 'toggle_paths',
+    TOGGLE_PATHS: "toggle_paths",
+    ACTIVATE_PLAYER: "activate_player",
 
     // Events
     PATHS_CHANGE_EVENT: "paths_change_event"

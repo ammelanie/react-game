@@ -20,5 +20,16 @@ export default {
             type: GameConstants.TOGGLE_PATHS,
             cityName: cityName
         });
+    },
+
+    /**
+     * Activation d'un joueur qui vient d'être selectionné
+     * @param name  nom du joueur
+     */
+    activatePlayer(name) {
+        GameDispatcher.dispatch({
+            type: GameConstants.ACTIVATE_PLAYER,
+            playerName: name
+        });
     }
 }
