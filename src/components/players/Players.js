@@ -50,6 +50,10 @@ class Players extends React.Component {
         PlayerStore.removeChangeListener(this.onChange);
     }
 
+    /**
+     * La vue correspond à un ensemble de joueurs
+     * @returns {ReactElement}
+     */
     render() {
 
         var players = [];

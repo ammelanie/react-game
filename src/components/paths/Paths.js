@@ -50,6 +50,10 @@ class Paths extends React.Component {
         PathStore.removeChangeListener(this.onChange);
     }
 
+    /**
+     * La vue correspond à un ensemble de chemins
+     * @returns {ReactElement}
+     */
     render() {
 
         var paths = [];
