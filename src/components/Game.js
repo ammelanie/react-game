@@ -11,6 +11,10 @@ import Paths from './paths/Paths';
 /**  Classe représentant l'ensemble du jeu */
 class Game extends React.Component {
 
+    /**
+     * Permet de rendre l'ensemble du jeu
+     * @returns {ReactElement}
+     */
     render() {
 
         return (

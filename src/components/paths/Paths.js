@@ -12,17 +12,23 @@ import Path from './Path';
 /**  Classe représentant l'ensemble des chemins du jeu */
 class Paths extends React.Component {
 
+    /**
+     * Constructeur de l'ensemble des chemins
+     * @param props
+     */
     constructor(props) {
         super(props);
 
+        // Ajout de chacun des chemins en tant qu'état
         this.state = {paths: PathStore.getAll()};
 
+        // Binding des fonctions du composant
         this.onChange = this.onChange.bind(this);
     }
 
     /**
-     * Callback appelé lorsque le store des chemins change
-     * Cela va mettre à jour l'état du composant
+     * Callback appelé lorsque le store des chemins émet un changement
+     * Cela va mettre à jour l'état du composant et donc rafraichir l'ensemble des chemins de la carte
      */
     onChange() {
         this.setState({ paths: PathStore.getAll() });
@@ -30,13 +36,15 @@ class Paths extends React.Component {
 
     /**
      * Callback déclenché lorsque le composant est monté
+     * Ajout d'un listener sur le store
      */
     componentDidMount() {
         PathStore.addChangeListener(this.onChange);
     }
 
     /**
-     *
+     * Callback déblenché lorsque le composant est démonté
+     * Suppression d'un listener sur le store
      */
     componentWillUnmount() {
         PathStore.removeChangeListener(this.onChange);

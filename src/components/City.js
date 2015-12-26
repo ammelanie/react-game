@@ -13,6 +13,8 @@ class City extends React.Component {
 
     /**
      * Callback appelé au clic sur une ville
+     * Appelle une fonction permettant d'envoyer l'information de changement au Store adéquat
+     * Le but étant de mettre à jour l'affichage des chemins de la carte
      */
     handleClick() {
         GameActions.togglePathsForCity(this.props.name);

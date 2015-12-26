@@ -180,7 +180,7 @@ class PathStore extends EventEmitter {
 
     /**
      * Enregistre un callback pour un composant qui sera déclenché lorsqu'un changement sera émi
-     * @param callback
+     * @param callback  fonction à appeler lors de l'ajout du listener
      */
     addChangeListener(callback) {
         this.on(GameDispatcher.PATHS_CHANGE_EVENT, callback);
@@ -188,7 +188,7 @@ class PathStore extends EventEmitter {
 
     /**
      * Supprime le callback d'un composant pour ne plus recevoir les changements émis
-     * @param callback
+     * @param callback  fonction à appeler lors de la suppression du listener
      */
     removeChangeListener(callback) {
         this.removeListener(GameDispatcher.PATHS_CHANGE_EVENT, callback);
@@ -198,12 +198,14 @@ class PathStore extends EventEmitter {
 let _PathStore = new PathStore();
 export default _PathStore;
 
-
+/**
+ * Enregistrement des actions à écouter en provenance du Dispatcher
+ */
 GameDispatcher.register((action) => {
 
     switch(action.type) {
 
-        // lorsque les employés ont été chargé depuis le serveur avec leurs affectations
+        // Lorsque les chemins doivent subir un changement d'état d'activation
         case GameConstants.TOGGLE_PATHS:
 
             _PathStore.togglePathsForCity(action.cityName);
