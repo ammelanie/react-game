@@ -31,5 +31,16 @@ export default {
             type: GameConstants.ACTIVATE_PLAYER,
             playerName: name
         });
+    },
+
+    /**
+     * Déplacement d'un joueur vers une ville en particulier
+     * @param cityName  nom de la ville où le joueur doit aller
+     */
+    movePlayerToCity(cityName) {
+        GameDispatcher.dispatch({
+            type: GameConstants.MOVE_PLAYER,
+            cityName: cityName
+        });
     }
 }

@@ -50,6 +50,19 @@ class PlayerStore extends EventEmitter {
     }
 
     /**
+     * Retourne le joueur selectionné s'il existe
+     * @returns {Player/null}   retourne le joueur selectionné ou null
+     */
+    getSelectedPlayer() {
+        for (var player of this._players) {
+            if (player.selected) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Active l'état de selection du joueur passé en paramètre et désactive les autres
      * @param name  nom du joueur
      */
@@ -57,6 +70,20 @@ class PlayerStore extends EventEmitter {
 
         for (let player of this._players) {
             player.selected = (player.name === name);
+        }
+    }
+
+    /**
+     * Déplacement du joueur selectionné sur une ville cliquée
+     * @param cityName  le nom de la ville où le joueur doit se rendre
+     */
+    movePlayerToCity(cityName) {
+        var playerToMove = this.getSelectedPlayer();
+
+        for (let player of this._players) {
+            if (player.name === playerToMove.name) {
+                player.cityName = cityName;
+            }
         }
     }
 
@@ -98,6 +125,12 @@ GameDispatcher.register((action) => {
         case GameConstants.ACTIVATE_PLAYER:
 
             _PlayerStore.activatePlayer(action.playerName);
+            _PlayerStore.emitChange();
+            break;
+
+        // Lorsque un joueur doit être déplacé
+        case GameConstants.MOVE_PLAYER:
+            _PlayerStore.movePlayerToCity(action.cityName);
             _PlayerStore.emitChange();
             break;
 
