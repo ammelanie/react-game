@@ -10,7 +10,9 @@ var connect = require('gulp-connect');
 // Démarrage du serveur sur le port 8080
 gulp.task('connect', function() {
     connect.server({
-        root: 'src'
+        root: 'src',
+        base: '192.168.0.29',
+        port: 8080
     });
 });
 
