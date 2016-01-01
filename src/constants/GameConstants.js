@@ -4,7 +4,7 @@
 
 export const GameConstants = {
     NUMBER_OF_ALLOWED_ACTIONS: 2,
-
+    WEBSOCKET_SERVER_URL: '192.168.0.29:9090',
 
     // Actions
     TOGGLE_PATHS: "toggle_paths",

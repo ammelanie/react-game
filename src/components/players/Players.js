@@ -10,6 +10,8 @@ import PlayerStore from '../../stores/PlayerStore';
 
 import Player from './Player';
 
+import GameActions from '../../actions/GameActions';
+
 /**  Classe représentant l'ensemble des joueurs du jeu */
 class Players extends React.Component {
 
@@ -37,9 +39,11 @@ class Players extends React.Component {
     /**
      * Callback déclenché lorsque le composant est monté
      * Ajout d'un listener sur le store
+     * Appel d'une action pour écouter le websocket server
      */
     componentDidMount() {
         PlayerStore.addChangeListener(this.onChange);
+        GameActions.listenToWebSocketServer();
     }
 
     /**

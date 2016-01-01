@@ -42,5 +42,21 @@ export default {
             type: GameConstants.MOVE_PLAYER,
             cityName: cityName
         });
+    },
+
+    /**
+     * Écoute du server de websocket
+     */
+    listenToWebSocketServer() {
+
+        var socket = new WebSocket("ws://" + GameConstants.WEBSOCKET_SERVER_URL);
+
+        socket.onopen = function (event) {
+            console.info("connected to websocket server");
+        };
+
+        socket.onmessage = function(message){
+            console.info("new message received :" + message.data)
+        };
     }
 }
