@@ -35,12 +35,14 @@ export default {
 
     /**
      * Déplacement d'un joueur vers une ville en particulier
+     * @param playerName nom du joueur à déplacer
      * @param cityName  nom de la ville où le joueur doit aller
      */
-    movePlayerToCity(cityName) {
+    movePlayerToCity(cityName, playerName) {
         GameDispatcher.dispatch({
             type: GameConstants.MOVE_PLAYER,
-            cityName: cityName
+            cityName: cityName,
+            playerName: playerName
         });
     },
 
@@ -50,13 +52,24 @@ export default {
     listenToWebSocketServer() {
 
         var socket = new WebSocket("ws://" + GameConstants.WEBSOCKET_SERVER_URL);
+        var self = this;
 
         socket.onopen = function (event) {
             console.info("connected to websocket server");
         };
 
+        // Réception d'un flux sous la forme "x/y/z" avec :
+        // x : la ville de départ du joueur
+        // y : la ville où va le joueur
+        // z : le joueur
         socket.onmessage = function(message){
-            console.info("new message received :" + message.data)
+
+            console.info("new message received : " + message.data);
+
+            var data = message.data.split('/');
+            var newCityName = data[1];
+
+            self.movePlayerToCity(newCityName, data[2]);
         };
     }
 }

@@ -51,12 +51,12 @@ class PlayerStore extends EventEmitter {
 
     /**
      * Retourne le joueur selectionné s'il existe
-     * @returns {Player/null}   retourne le joueur selectionné ou null
+     * @returns {string/null}   retourne le joueur selectionné ou null
      */
-    getSelectedPlayer() {
+    getSelectedPlayerName() {
         for (var player of this._players) {
             if (player.selected) {
-                return player;
+                return player.name;
             }
         }
         return null;
@@ -75,13 +75,20 @@ class PlayerStore extends EventEmitter {
 
     /**
      * Déplacement du joueur selectionné sur une ville cliquée
+     * @param playerName  le nom du joueur qui doit se déplacer
      * @param cityName  le nom de la ville où le joueur doit se rendre
      */
-    movePlayerToCity(cityName) {
-        var playerToMove = this.getSelectedPlayer();
+    movePlayerToCity(cityName, playerName = this.getSelectedPlayerName()) {
+
+        if (playerName === null)
+            return;
+
+        this.activatePlayer(playerName);
+
+        console.info("Déplacement du joueur " + playerName + " vers la ville " + cityName);
 
         for (let player of this._players) {
-            if (player.name === playerToMove.name) {
+            if (player.name === playerName) {
                 player.cityName = cityName;
             }
         }
@@ -130,7 +137,7 @@ GameDispatcher.register((action) => {
 
         // Lorsque un joueur doit être déplacé
         case GameConstants.MOVE_PLAYER:
-            _PlayerStore.movePlayerToCity(action.cityName);
+            _PlayerStore.movePlayerToCity(action.cityName, action.playerName);
             _PlayerStore.emitChange();
             break;
 
