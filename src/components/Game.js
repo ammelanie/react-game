@@ -7,6 +7,7 @@ import React from 'react';
 import FranceMap from './areas/FranceMap';
 import Paths from './paths/Paths';
 import Players from './players/Players';
+import Viruses from './viruses/Viruses';
 
 
 /**  Classe représentant l'ensemble du jeu */
@@ -26,6 +27,7 @@ class Game extends React.Component {
                 </svg>
 
                 <Players />
+                <Viruses />
             </div>
         );
     }
