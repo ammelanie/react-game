@@ -98,7 +98,7 @@ class PlayerStore extends EventEmitter {
      * Indique aux composants enregistrés qu'un changement a eu lieu au sein du store
      */
     emitChange() {
-        this.emit(GameDispatcher.PLAYERS_CHANGE_EVENT);
+        this.emit(GameConstants.PLAYERS_CHANGE_EVENT);
     }
 
     /**
@@ -106,7 +106,7 @@ class PlayerStore extends EventEmitter {
      * @param callback  fonction à appeler lors de l'ajout du listener
      */
     addChangeListener(callback) {
-        this.on(GameDispatcher.PLAYERS_CHANGE_EVENT, callback);
+        this.on(GameConstants.PLAYERS_CHANGE_EVENT, callback);
     }
 
     /**
@@ -114,7 +114,7 @@ class PlayerStore extends EventEmitter {
      * @param callback  fonction à appeler lors de la suppression du listener
      */
     removeChangeListener(callback) {
-        this.removeListener(GameDispatcher.PLAYERS_CHANGE_EVENT, callback);
+        this.removeListener(GameConstants.PLAYERS_CHANGE_EVENT, callback);
     }
 }
 
