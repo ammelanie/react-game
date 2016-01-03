@@ -21,6 +21,7 @@ class Virus extends React.Component {
 
         var city = CityStore.findByName(this.props.cityName);
 
+        // TODO : voir pour mutualisation des styles
         var styles = {
             virus_boxes: {
                 position: "absolute",
@@ -36,12 +37,28 @@ class Virus extends React.Component {
                 width: "5px",
                 height: city.viruses[this.props.name].level * 10,
                 backgroundColor: ( this.props.name === GameConstants.VIRUS_A ) ? "#FFEB3B" : "#4CAF50"
+            },
+            separator_A: {
+                position: "absolute",
+                width: "5px",
+                height: "1px",
+                backgroundColor: "black",
+                bottom: "10px"
+            },
+            separator_B: {
+                position: "absolute",
+                width: "5px",
+                height: "1px",
+                backgroundColor: "black",
+                bottom: "20px"
             }
         };
 
         return (
             <div style={styles.virus_boxes}>
                 <div style={styles.virus}></div>
+                <div style={styles.separator_A}></div>
+                <div style={styles.separator_B}></div>
             </div>
 
         );
