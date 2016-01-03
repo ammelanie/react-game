@@ -191,6 +191,12 @@ class CityStore extends EventEmitter {
         return this._cities[cityName];
     }
 
+    /**
+     * Gestion de la propagation du virus à chaque tour de joueur
+     * La propagation peut être :
+     *  - une propagation classique : infection d'une ville avec un cran de virus
+     *  - une épidémie : récupération de la dernière carte de la pile : ajout de 3 virus, remise dans la pile de toutes les villes
+     */
     propagateVirus() {
 
         console.info("Niveau de propagation : " + this._propagationVirusLevel);
@@ -198,84 +204,116 @@ class CityStore extends EventEmitter {
         // Ajout de X virus en fonction du niveau de propagation actuel
         for (var i = 0; i < this._propagationVirusLevel; i++) {
 
+            // Augmentation du nombre de propagation à chaque propagation
             this._numberOfPropagationsGetted++;
             console.info("Propagation n° : " + this._numberOfPropagationsGetted);
 
-            // Afin de savoir s'il s'agit d'une épidémie on vérifie que l'index que l'on tire ne correspond pas à un
-            // index d'épidémie. On part de la fin car les éléments sont retirés dans cet ordre
+            // Afin de savoir s'il s'agit d'une épidémie  ou d'une simple propagation on vérifie que le nombre de
+            // propagation déjà effectué correspond à un index d'épidémie.
             if (this._epidemicIndexes.indexOf(this._numberOfPropagationsGetted) === -1) {
 
-                // récupération de la ville et virus à propager sous la forme ["villeA","virus1"]
-                var newInfectedCityByVirus = this._nonInfectedCitiesByVirus.pop();
-
-                this._alreadyInfectedCitiesByVirus.push(newInfectedCityByVirus);
-
-                var cityName = newInfectedCityByVirus[0];
-                var virusName = newInfectedCityByVirus[1];
-
-                console.info("Propagation du virus " + virusName + " sur la ville " + cityName);
-
-                // Mise à jour du niveau d'infection par le virus pour la ville si elle peut être infecté
-                var city = this.findByName(cityName);
-
-                if (city.canBeInfected) {
-                    var newLevelVirusForCity = ++city.viruses[virusName].level;
-                    console.info("Niveau de propagation pour la ville " + cityName + " : " + newLevelVirusForCity);
-                }
+                this.classicPropagation();
 
             } else {
-                // Une épidémie a été tirée : le nombre de propagation effectuée correspond à une épidémie
-                this._numberOfEpidemicGetted++;
-
-                // Augmentation du nombre de propagation par tour selon nombre d'épidémie
-                // À 2 on incrémente de 1
-                // À 4 également
-                switch(this._numberOfEpidemicGetted) {
-                    case 2:
-                    case 4:
-                        this._propagationVirusLevel++;
-                        break;
-                    default:
-                        break;
-                }
-
-                console.info("Nouvelle épidémie - épidémie n°" + this._numberOfEpidemicGetted);
-
-                var cityToInfectData;
-                var cityToInfect;
-
-                // Tirage de la dernière carte du paquet des villes non tirées et augmentation du niveau de 3 crans
-                for (let i = 0; i < this._nonInfectedCitiesByVirus.length; i++) {
-                    cityToInfect = this.findByName(this._nonInfectedCitiesByVirus[i][0]);
-
-                    if (cityToInfect.canBeInfected) {
-                        cityToInfectData = this._nonInfectedCitiesByVirus.splice(i, 1)[0];
-                        break;
-                    }
-                }
-
-                this._alreadyInfectedCitiesByVirus.push(cityToInfectData);
-
-                var cityName = cityToInfectData[0];
-                var virusName = cityToInfectData[1];
-
-                console.info("Épidémie du virus " + virusName + " sur la ville " + cityName);
-
-                cityToInfect.viruses[virusName].level = cityToInfect.viruses[virusName].level + 3;
-                var newLevelVirusForCity = cityToInfect.viruses[virusName].level;
-                console.info("Niveau de propagation pour la ville " + cityName + " : " + newLevelVirusForCity);
-
-                // Mélange du tableau des villes déjà infectées
-                Utils.shuffle(this._alreadyInfectedCitiesByVirus);
-                for (let city of this._alreadyInfectedCitiesByVirus) {
-                    this._nonInfectedCitiesByVirus.push(city);
-                }
-
-                this._alreadyInfectedCitiesByVirus = [];
+                // Gestion de l'épidémie
+                this.epidemicPropagation();
             }
 
             console.info(this._nonInfectedCitiesByVirus);
             console.info(this._alreadyInfectedCitiesByVirus);
+        }
+    }
+
+    /**
+     * Gestion d'une propagation classique
+     *  - Récupération de la dernière ville de la pile des "Villes pouvant être infectées" : ajout d'un cran de virus
+     */
+    classicPropagation() {
+        // récupération de la ville et virus à propager sous la forme ["villeA","virus1"]
+        var newInfectedCityByVirus = this._nonInfectedCitiesByVirus.pop();
+
+        this._alreadyInfectedCitiesByVirus.push(newInfectedCityByVirus);
+
+        var cityName = newInfectedCityByVirus[0];
+        var virusName = newInfectedCityByVirus[1];
+
+        console.info("Propagation du virus " + virusName + " sur la ville " + cityName);
+
+        // Mise à jour du niveau d'infection par le virus pour la ville si elle peut être infecté
+        var city = this.findByName(cityName);
+
+        if (city.canBeInfected) {
+            var newLevelVirusForCity = ++city.viruses[virusName].level;
+            console.info("Niveau de propagation pour la ville " + cityName + " : " + newLevelVirusForCity);
+        }
+    }
+
+    /**
+     * Gestion d'une épidémie
+     *  - Gestion du niveau de la propagation
+     *  - Récupération dans la pile des villes non tirées de la dernière ville infectable : ajout de 3 virus
+     *  - Passage des villes de la pile "Villes déjà infectées" à la pile "Villes pouvant être infectées"
+     */
+    epidemicPropagation() {
+        this._numberOfEpidemicGetted++;
+
+        this.managePropagationLevel();
+
+        console.info("Nouvelle épidémie - épidémie n°" + this._numberOfEpidemicGetted);
+
+        var cityToInfectData;
+        var cityToInfect;
+
+        // Tirage de la dernière carte du paquet des villes non infectés et augmentation du niveau de 3 crans
+        for (let i = 0; i < this._nonInfectedCitiesByVirus.length; i++) {
+            cityToInfect = this.findByName(this._nonInfectedCitiesByVirus[i][0]);
+
+            if (cityToInfect.canBeInfected) {
+                cityToInfectData = this._nonInfectedCitiesByVirus.splice(i, 1)[0];
+                break;
+            }
+        }
+
+        this._alreadyInfectedCitiesByVirus.push(cityToInfectData);
+
+        var cityName = cityToInfectData[0];
+        var virusName = cityToInfectData[1];
+
+        console.info("Épidémie du virus " + virusName + " sur la ville " + cityName);
+
+        cityToInfect.viruses[virusName].level = cityToInfect.viruses[virusName].level + 3;
+        console.info("Niveau de propagation pour la ville " + cityName + " : " + cityToInfect.viruses[virusName].level);
+
+        this.resetNonInfectedCitiesList();
+    }
+
+    /**
+     * Évènement après épidémie :
+     * Remise dans la liste des villes non tirées des villes préalablement infectées, de façon aléatoire
+     */
+    resetNonInfectedCitiesList() {
+        // Mélange du tableau des villes déjà infectées afin de les ajouter au tableau
+        Utils.shuffle(this._alreadyInfectedCitiesByVirus);
+        for (let city of this._alreadyInfectedCitiesByVirus) {
+            this._nonInfectedCitiesByVirus.push(city);
+        }
+
+        // Remise à 0 des villes déjà infectées
+        this._alreadyInfectedCitiesByVirus = [];
+    }
+
+    /**
+     * Augmentation du nombre de propagation par tour de joueur selon le nombre d'épidémies déjà tirées
+     * 2 et 4 => +1 propagation / tour
+     */
+    managePropagationLevel() {
+        switch(this._numberOfEpidemicGetted) {
+            case 2:
+            case 4:
+                this._propagationVirusLevel++;
+                break;
+            default:
+                break;
         }
     }
 
@@ -315,7 +353,6 @@ GameDispatcher.register((action) => {
 
         // Lancement d'une propagation de virus
         case GameConstants.VIRUS_PROPAGATION:
-
             _CityStore.propagateVirus();
             _CityStore.emitChange();
             break;
