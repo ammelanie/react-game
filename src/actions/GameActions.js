@@ -44,6 +44,9 @@ export default {
             cityName: cityName,
             playerName: playerName
         });
+        GameDispatcher.dispatch({
+            type: GameConstants.VIRUS_PROPAGATION
+        });
     },
 
     /**

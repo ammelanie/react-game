@@ -14,17 +14,53 @@ import CityStore from '../../stores/CityStore';
 class Viruses extends React.Component {
 
     /**
+     * Constructeur de l'ensemble des virus
+     * @param props
+     */
+    constructor(props) {
+        super(props);
+
+        // Ajout de chacune des villes infecatbles en tant qu'état
+        this.state = {cities: CityStore.getAllInfectable()};
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    /**
+     * Callback appelé lorsque le store des villes émet un changement
+     * Cela va mettre à jour l'état du composant et donc rafraichir les jauges de virus
+     */
+    onChange() {
+        this.setState({ cities: CityStore.getAllInfectable() });
+    }
+
+    /**
+     * Callback déclenché lorsque le composant est monté
+     * Ajout d'un listener sur le store des villes
+     */
+    componentDidMount() {
+        CityStore.addChangeListener(this.onChange);
+    }
+
+    /**
+     * Callback déblenché lorsque le composant est démonté
+     * Suppression d'un listener sur le store des villes
+     */
+    componentWillUnmount() {
+        CityStore.removeChangeListener(this.onChange);
+    }
+
+    /**
      * La vue correspond à un ensemble de virus
      * @returns {ReactElement}
      */
     render() {
 
         var viruses = [];
-        var cities = CityStore.getAllInfectable();
 
         // Affichage des jauges de virus sur la carte
-        for (let cityName in cities) {
-            var city = cities[cityName];
+        for (let cityName in this.state.cities) {
+            var city = this.state.cities[cityName];
 
             for (let virusName in city.viruses) {
                 viruses.push(
