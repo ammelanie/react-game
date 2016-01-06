@@ -7,7 +7,7 @@ import React from 'react';
 import AreaMap from './AreaMap';
 import City from '../City';
 
-import CityStore from '../../stores/CityStore';
+import GameStore from '../../stores/GameStore';
 
 /**
  * Classe représentant une nouvelle région de France
@@ -42,7 +42,7 @@ class BigAreaMap extends React.Component {
             );
         }
 
-        var capital = CityStore.findByName(this.props.capital);
+        var capital = GameStore.findCityByName(this.props.capital);
 
         return (
             <g>

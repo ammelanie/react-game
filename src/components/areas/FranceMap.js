@@ -7,8 +7,7 @@ import React from 'react';
 import BigAreaMap from './BigAreaMap';
 import Path from '../paths/Path';
 
-import AreaStore from '../../stores/AreaStore';
-import PathStore from '../../stores/PathStore';
+import Data from '../../utils/data'
 
 /**
  * Classe représentant la carte de France
@@ -22,7 +21,7 @@ class  FranceMap extends React.Component {
     constructor() {
         super();
 
-        this.areas = AreaStore.getAll();
+        this.areas = Data.areas();
     }
 
     /**

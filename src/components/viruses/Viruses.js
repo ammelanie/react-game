@@ -8,7 +8,9 @@ import React from 'react';
 
 import Virus from './Virus';
 
-import CityStore from '../../stores/CityStore';
+import GameStore from '../../stores/GameStore';
+
+import {GameConstants} from '../../constants/GameConstants';
 
 /**  Classe représentant l'ensemble des virus du jeu */
 class Viruses extends React.Component {
@@ -21,7 +23,7 @@ class Viruses extends React.Component {
         super(props);
 
         // Ajout de chacune des villes infecatbles en tant qu'état
-        this.state = {cities: CityStore.getAllInfectable()};
+        this.state = {cities: GameStore.getAllInfectableCities()};
 
         this.onChange = this.onChange.bind(this);
     }
@@ -31,7 +33,7 @@ class Viruses extends React.Component {
      * Cela va mettre à jour l'état du composant et donc rafraichir les jauges de virus
      */
     onChange() {
-        this.setState({ cities: CityStore.getAllInfectable() });
+        this.setState({ cities: GameStore.getAllInfectableCities() });
     }
 
     /**
@@ -39,7 +41,7 @@ class Viruses extends React.Component {
      * Ajout d'un listener sur le store des villes
      */
     componentDidMount() {
-        CityStore.addChangeListener(this.onChange);
+        GameStore.addChangeListener(GameConstants.CITIES_CHANGE_EVENT, this.onChange);
     }
 
     /**
@@ -47,7 +49,7 @@ class Viruses extends React.Component {
      * Suppression d'un listener sur le store des villes
      */
     componentWillUnmount() {
-        CityStore.removeChangeListener(this.onChange);
+        GameStore.removeChangeListener(GameConstants.CITIES_CHANGE_EVENT, this.onChange);
     }
 
     /**

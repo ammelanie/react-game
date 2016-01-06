@@ -4,10 +4,11 @@
 
 import React from 'react';
 
-import CityStore from '../../stores/CityStore';
-import PathStore from '../../stores/PathStore';
+import GameStore from '../../stores/GameStore';
 
 import Path from './Path';
+
+import {GameConstants} from '../../constants/GameConstants';
 
 /**  Classe représentant l'ensemble des chemins du jeu */
 class Paths extends React.Component {
@@ -20,7 +21,7 @@ class Paths extends React.Component {
         super(props);
 
         // Ajout de chacun des chemins en tant qu'état
-        this.state = {paths: PathStore.getAll()};
+        this.state = {paths: GameStore.getAllPaths()};
 
         // Binding des fonctions du composant
         this.onChange = this.onChange.bind(this);
@@ -31,7 +32,7 @@ class Paths extends React.Component {
      * Cela va mettre à jour l'état du composant et donc rafraichir l'ensemble des chemins de la carte
      */
     onChange() {
-        this.setState({ paths: PathStore.getAll() });
+        this.setState({ paths: GameStore.getAllPaths() });
     }
 
     /**
@@ -39,7 +40,7 @@ class Paths extends React.Component {
      * Ajout d'un listener sur le store
      */
     componentDidMount() {
-        PathStore.addChangeListener(this.onChange);
+        GameStore.addChangeListener(GameConstants.PATHS_CHANGE_EVENT, this.onChange);
     }
 
     /**
@@ -47,7 +48,7 @@ class Paths extends React.Component {
      * Suppression d'un listener sur le store
      */
     componentWillUnmount() {
-        PathStore.removeChangeListener(this.onChange);
+        GameStore.removeChangeListener(GameConstants.PATHS_CHANGE_EVENT,this.onChange);
     }
 
     /**
@@ -63,8 +64,8 @@ class Paths extends React.Component {
             let path = this.state.paths[key];
 
             // Récupération des villes d'extrémité du chemin
-            let cityA = CityStore.findByName(path.cityA);
-            let cityB = CityStore.findByName(path.cityB);
+            let cityA = GameStore.findCityByName(path.cityA);
+            let cityB = GameStore.findCityByName(path.cityB);
 
             paths.push(
                 <Path

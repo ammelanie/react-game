@@ -6,8 +6,7 @@
 
 import React from 'react';
 
-import CityStore from '../../stores/CityStore';
-import PlayerStore from '../../stores/PlayerStore';
+import GameStore from '../../stores/GameStore';
 
 import GameActions from '../../actions/GameActions';
 
@@ -30,7 +29,7 @@ class Player extends React.Component {
      */
     render() {
 
-        var city = CityStore.findByName(this.props.cityName);
+        var city = GameStore.findCityByName(this.props.cityName);
 
         var styles = {
             boxes: {

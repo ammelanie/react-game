@@ -6,11 +6,13 @@
 
 import React from 'react';
 
-import PlayerStore from '../../stores/PlayerStore';
+import GameStore from '../../stores/GameStore';
 
 import Player from './Player';
 
 import GameActions from '../../actions/GameActions';
+
+import {GameConstants} from '../../constants/GameConstants';
 
 /**  Classe représentant l'ensemble des joueurs du jeu */
 class Players extends React.Component {
@@ -23,7 +25,7 @@ class Players extends React.Component {
         super(props);
 
         // Ajout de chacun des joueurs en tant qu'état
-        this.state = {players: PlayerStore.getAll()};
+        this.state = {players: GameStore.getAllPlayers()};
 
         this.onChange = this.onChange.bind(this);
     }
@@ -33,7 +35,7 @@ class Players extends React.Component {
      * Cela va mettre à jour l'état du composant et donc rafraichir l'ensemble des joueurs de la carte
      */
     onChange() {
-        this.setState({ players: PlayerStore.getAll() });
+        this.setState({ players: GameStore.getAllPlayers() });
     }
 
     /**
@@ -42,7 +44,7 @@ class Players extends React.Component {
      * Appel d'une action pour écouter le websocket server
      */
     componentDidMount() {
-        PlayerStore.addChangeListener(this.onChange);
+        GameStore.addChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onChange);
         GameActions.listenToWebSocketServer();
     }
 
@@ -51,7 +53,7 @@ class Players extends React.Component {
      * Suppression d'un listener sur le store
      */
     componentWillUnmount() {
-        PlayerStore.removeChangeListener(this.onChange);
+        GameStore.removeChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onChange);
     }
 
     /**

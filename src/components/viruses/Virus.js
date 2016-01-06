@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import CityStore from '../../stores/CityStore';
+import GameStore from '../../stores/GameStore';
 
 import {GameConstants} from '../../constants/GameConstants';
 
@@ -19,7 +19,7 @@ class Virus extends React.Component {
      */
     render() {
 
-        var city = CityStore.findByName(this.props.cityName);
+        var city = GameStore.findCityByName(this.props.cityName);
 
         // TODO : voir pour mutualisation des styles
         var styles = {

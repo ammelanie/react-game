@@ -4,8 +4,6 @@
 
 import React from 'react';
 
-import CityStore from '../stores/CityStore';
-
 import GameActions from '../actions/GameActions';
 
 /**  Classe représentant une ville */

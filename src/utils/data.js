@@ -1,23 +1,217 @@
 /**
- * Created by melanie on 17/12/15.
+ * Created by melanie on 06/01/16.
  */
 
-'use strict';
+import {GameConstants} from '../constants/GameConstants';
 
-import EventEmitter from 'events';
+/************************************************
+ *                                              *
+ *     Définition des données brutes du jeu     *
+ *                                              *
+ ************************************************/
 
-/**
- * Représente le store des régions
- */
-class AreaStore extends EventEmitter {
+export default {
 
     /**
-     * Construction du store avec l'ensemble des données de régions
-     * @constructor
+     * Définition des joueurs du jeu
+     * @returns {Array} le tableau des joueurs
      */
-    constructor(props) {
-        super(props);
-        this._areas = [
+    players() {
+        var players = [
+            {
+                name: "Joueur 1",
+                color: "red"
+            }, {
+                name: "Joueur 2",
+                color: "green"
+            }, {
+                name: "Joueur 3",
+                color: "blue"
+            }
+        ];
+
+        // Ajout de la ville initiale à chacun des joueurs et d'une propriété de selection
+        for (let player of players) {
+            player.cityName = "Toulouse";
+            player.selected = false;
+        }
+
+        return players;
+    },
+
+    /**
+     * Définition de l'ensemble des villes du jeu
+     * @returns {Object} objet d'objets ayant pour clé le nom de chaque ville
+     */
+    cities() {
+        var cities = {
+            "Rennes": {
+                coordinateX: 120,
+                coordinateY: 160,
+                canBeInfected: true
+            },
+            "Rouen": {
+                coordinateX: 240,
+                coordinateY: 90,
+                canBeInfected: true
+            },
+            "Paris": {
+                coordinateX: 300,
+                coordinateY: 143,
+                canBeInfected: true
+            },
+            "Lille": {
+                coordinateX: 328,
+                coordinateY: 25,
+                canBeInfected: true
+            },
+            "Strasbourg": {
+                coordinateX: 515,
+                coordinateY: 150,
+                canBeInfected: true
+            },
+            "Lyon": {
+                coordinateX: 400,
+                coordinateY: 330,
+                canBeInfected: true
+            },
+            "Dijon": {
+                coordinateX: 390,
+                coordinateY: 230,
+                canBeInfected: true
+            },
+            "Marseille": {
+                coordinateX: 400,
+                coordinateY: 480,
+                canBeInfected: true
+            },
+            "Ajaccio": {
+                coordinateX: 495,
+                coordinateY: 550,
+                canBeInfected: true
+            },
+            "Toulouse": {
+                coordinateX: 220,
+                coordinateY: 450,
+                canBeInfected: true
+            },
+            "Bordeaux": {
+                coordinateX: 140,
+                coordinateY: 350,
+                canBeInfected: true
+            },
+            "Orléans": {
+                coordinateX: 270,
+                coordinateY: 190,
+                canBeInfected: true
+            },
+            "Nantes": {
+                coordinateX: 120,
+                    coordinateY: 220,
+                    canBeInfected: true
+            },
+            "A": {canBeInfected: false},
+            "B": {canBeInfected: false},
+            "C": {canBeInfected: false},
+            "D": {canBeInfected: false},
+            "E": {canBeInfected: false},
+            "F": {canBeInfected: false},
+            "G": {canBeInfected: false},
+            "H": {canBeInfected: false},
+            "I": {canBeInfected: false},
+            "J": {canBeInfected: false},
+            "K": {canBeInfected: false},
+            "L": {canBeInfected: false},
+            "M": {canBeInfected: false}
+        };
+
+        // Ajout de la notion de virus pour les 13 principales villes, pouvant être infectés
+        for (let key in cities) {
+            var city = cities[key];
+
+            if ( city.canBeInfected ) {
+                city['viruses'] = {};
+                city['viruses'][GameConstants.VIRUS_A] = {};
+                city['viruses'][GameConstants.VIRUS_B] = {};
+                city['viruses'][GameConstants.VIRUS_A]['level'] = 0;
+                city['viruses'][GameConstants.VIRUS_B]['level'] = 0;
+            }
+        }
+
+        return cities;
+    },
+
+    /**
+     * Définition de l'ensemble des chemins du jeu
+     * @returns {Array} les chemins du jeu
+     */
+    paths() {
+        var paths = [{
+            cityA : "Rennes",
+            cityB: "Rouen"
+        }, {
+            cityA: "Rennes",
+            cityB : "Nantes"
+        }, {
+            cityA : "Rennes",
+            cityB: "Paris"
+        }, {
+            cityA: "Rouen",
+            cityB: "Lille"
+        }, {
+            cityA: "Paris",
+            cityB: "Strasbourg"
+        }, {
+            cityA: "Paris",
+            cityB: "Orléans"
+        }, {
+            cityA: "Paris",
+            cityB: "Dijon"
+        }, {
+            cityA: "Paris",
+            cityB: "Lille"
+        }, {
+            cityA: "Lille",
+            cityB: "Strasbourg"
+        }, {
+            cityA: "Strasbourg",
+            cityB: "Dijon"
+        }, {
+            cityA: "Lyon",
+            cityB: "Dijon"
+        }, {
+            cityA: "Lyon",
+            cityB: "Bordeaux"
+        }, {
+            cityA: "Lyon",
+            cityB: "Marseille"
+        }, {
+            cityA: "Marseille",
+            cityB: "Ajaccio"
+        }, {
+            cityA: "Marseille",
+            cityB: "Toulouse"
+        }, {
+            cityA: "Toulouse",
+            cityB: "Bordeaux"
+        }, {
+            cityA: "Bordeaux",
+            cityB: "Nantes"
+        }, {
+            cityA: "Bordeaux",
+            cityB: "Orléans"
+        }];
+
+        // Ajout de la propriété active à false par défaut pour chacun des chemins
+        for (var path of paths) {
+            path.active = false;
+        }
+
+        return paths;
+    },
+
+    areas() {
+        return [
             {
                 areas: [
                     {
@@ -29,13 +223,13 @@ class AreaStore extends EventEmitter {
                 capital:  "Paris"
             }, {
                 areas: [
-                    {
-                        name: "Nord Pas De Calais",
-                        d: "M327.25,61.98l-26.82-4.56l2.41-6.26l-13.89,0.61l-7.34-8.19l-10.14-0.57l-6.35-4.65l4.49-27.99l6.36-5.52l14.86-2.5L307.96,0l3.43,15.74l6.98,5.38l13.3-4.25l5.65,16.43l9.49,1.64l3.75,11.31l17.97,1.57l2.44,18.56l-5.76,4.26l-6.39-5.9l-9.93,2.61l-7.6-2.48l-9.94,3.3L327.25,61.98z"
-                    }, {
-                        name: "Picardie",
-                        d: "M323.34,117.03l-2.08,4.81l-23.76-1.75l-6.13-7.29l-7.23,2.37l-5.39-3.77l-15.95,2.04l0.36-13.6l3.78-5.62l-2.97-3.64l4.1-12.98l-2.31-8.85l-5.27-7.94l0.9-17.17l3.77-5.27l6.35,4.65l10.14,0.57l7.34,8.19l13.89-0.61l-2.41,6.26l26.82,4.56l4.11,6.19l9.94-3.3l7.6,2.48l9.93-2.61l6.39,5.9l5.76-4.26l0.38,11.07l-6.36,10.2l-3.58,15.72l-17.57,3.02l3.91,10.65l-5.72-0.76l0.7,14.48l-9.31,2.29L323.34,117.03z"
-                    }
+                {
+                    name: "Nord Pas De Calais",
+                    d: "M327.25,61.98l-26.82-4.56l2.41-6.26l-13.89,0.61l-7.34-8.19l-10.14-0.57l-6.35-4.65l4.49-27.99l6.36-5.52l14.86-2.5L307.96,0l3.43,15.74l6.98,5.38l13.3-4.25l5.65,16.43l9.49,1.64l3.75,11.31l17.97,1.57l2.44,18.56l-5.76,4.26l-6.39-5.9l-9.93,2.61l-7.6-2.48l-9.94,3.3L327.25,61.98z"
+                }, {
+                    name: "Picardie",
+                    d: "M323.34,117.03l-2.08,4.81l-23.76-1.75l-6.13-7.29l-7.23,2.37l-5.39-3.77l-15.95,2.04l0.36-13.6l3.78-5.62l-2.97-3.64l4.1-12.98l-2.31-8.85l-5.27-7.94l0.9-17.17l3.77-5.27l6.35,4.65l10.14,0.57l7.34,8.19l13.89-0.61l-2.41,6.26l26.82,4.56l4.11,6.19l9.94-3.3l7.6,2.48l9.93-2.61l6.39,5.9l5.76-4.26l0.38,11.07l-6.36,10.2l-3.58,15.72l-17.57,3.02l3.91,10.65l-5.72-0.76l0.7,14.48l-9.31,2.29L323.34,117.03z"
+                }
                 ],
                 fill: "#FFFFB1",
                 capital: "Lille"
@@ -165,15 +359,4 @@ class AreaStore extends EventEmitter {
             }
         ]
     }
-
-    /**
-     * Permet de récupérer l'ensemble des régions
-     * @returns {Array}
-     */
-    getAll() {
-        return this._areas;
-    }
 }
-
-let _AreaStore = new AreaStore();
-export default _AreaStore;
