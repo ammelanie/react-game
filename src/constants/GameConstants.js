@@ -10,6 +10,9 @@ export const GameConstants = {
     DEFAULT_PROPAGATION_BASE_LEVEL: 2,
     EPIDEMIC_NUMBER: 4,
     EPIDEMIC_TAG: "EPIDEMIC",
+    MAX_LEVEL_VIRUS_PER_CITY: 3,
+    PROPAGATION_INCREASE: 1,
+    EPIDEMIC_INCREASE: 3,
 
     // Actions
     TOGGLE_PATHS: "toggle_paths",

@@ -43,6 +43,9 @@ class GameStore extends EventEmitter {
         // Nombre de propagation ayant eu lieu
         this._numberOfPropagationsGetted = 0;
 
+        // Nombre d'éclosion ayant eu lieu
+        this._numberOfOutbreaksGetted = 0;
+
         // Tableau [ [ "villeA", "virusA"] ... ] contenant l'ensemble des villes / virus déjà prises en compte
         this._alreadyInfectedCitiesByVirus = [];
 
@@ -174,7 +177,6 @@ class GameStore extends EventEmitter {
 
 
 
-
     /*********************************************
      *   Méthodes liées uniquement aux chemins   *
      *********************************************/
@@ -263,6 +265,26 @@ class GameStore extends EventEmitter {
         return allPaths;
     }
 
+    /**
+     * Récupère l'ensemble des villes liées à une ville en particulier
+     * @param cityName  le nom de la ville dont on cherche les villes liées
+     * @returns {Array} l'ensemble des noms de villes liées
+     */
+    getLinkedCities(cityName) {
+        var cities = [];
+
+        for (var path of this._paths) {
+            if (path.cityA === cityName && cities.indexOf(cityName) === -1) {
+                cities.push(path.cityB);
+            } else if (path.cityB === cityName && cities.indexOf(cityName) === -1) {
+                cities.push(path.cityA);
+            }
+        }
+
+        return cities;
+    }
+
+
 
     /*********************************************
      *   Méthodes liées à la propagation virus   *
@@ -320,8 +342,7 @@ class GameStore extends EventEmitter {
         var city = this.findCityByName(cityName);
 
         if (city.canBeInfected) {
-            var newLevelVirusForCity = ++city.viruses[virusName].level;
-            console.info("Niveau de propagation pour la ville " + cityName + " : " + newLevelVirusForCity);
+            this.increaseVirusLevelForCity(city, cityName, virusName, GameConstants.PROPAGATION_INCREASE);
         }
     }
 
@@ -358,10 +379,85 @@ class GameStore extends EventEmitter {
 
         console.info("Épidémie du virus " + virusName + " sur la ville " + cityName);
 
-        cityToInfect.viruses[virusName].level = cityToInfect.viruses[virusName].level + 3;
-        console.info("Niveau de propagation pour la ville " + cityName + " : " + cityToInfect.viruses[virusName].level);
+        this.increaseVirusLevelForCity(cityToInfect, cityName, virusName, GameConstants.EPIDEMIC_INCREASE);
 
         this.resetNonInfectedCitiesList();
+    }
+
+    /**
+     * Vérification du potentiel d'éclosion sur une ville donnée
+     * @param city  la ville à analyser
+     * @param virusName le nom du virus à propager
+     * @param numVirusToAdd le nombre de virus à propager
+     * @returns {boolean} vrai si une éclosion va avoir lieu
+     */
+    isPropagationOutbreaking(city, virusName, numVirusToAdd) {
+        // vérification de la condition d'éclosion
+        return ( city.viruses[virusName].level + numVirusToAdd ) > GameConstants.MAX_LEVEL_VIRUS_PER_CITY
+    }
+
+    /**
+     * Propagation d'une éclosion vers les villes voisines
+     * @param currentCityName la ville subissant l'éclosion
+     * @param virusName le nom du virus incriminé
+     * @param alreadyInfectedCities tableau des villes déjà infectées par cette éclosion (réaction en chaine)
+     */
+    propagateVirusToLinkedCities(currentCityName, virusName, alreadyOutbreakedCities) {
+        // Réccupération de l'ensemble des villes liées à la ville en éclosion
+        var citiesToInfect = this.getLinkedCities(currentCityName);
+
+        for (let cityNameToInfect of citiesToInfect) {
+
+            // Vérification d'une condition indispensable dans le cas d'une réaction en chaine :
+            // Lors de la même réaction en chaine, une ville ne peut pas être en éclosion deux fois.
+            if (alreadyOutbreakedCities.indexOf(cityNameToInfect) !== -1) {
+                console.info("La ville " + cityNameToInfect + " a déjà été traitée !");
+                continue;
+            }
+
+            var city = this.findCityByName(cityNameToInfect);
+
+            // Vérification du niveau de l'éclosion pour la ville en cours d'infection
+            if (this.isPropagationOutbreaking(city, virusName, GameConstants.PROPAGATION_INCREASE)) {
+
+                this._numberOfOutbreaksGetted++;
+                console.info("Éclosion n° " + this._numberOfOutbreaksGetted + " en cours dans la ville de " + cityNameToInfect + " pour le virus " + virusName + " !");
+
+                alreadyOutbreakedCities.push(cityNameToInfect);
+
+                // Récursivité en conservant la ville initiale, et en passant à ville précedente la ville qui vient de subit une éclosion
+                this.propagateVirusToLinkedCities(cityNameToInfect, virusName, alreadyOutbreakedCities);
+            } else {
+                var newVirusLevelForCity = ++city.viruses[virusName].level;
+                console.info("Infection de la ville " + cityNameToInfect + " passage du niveau de virus à " + newVirusLevelForCity);
+            }
+        }
+    }
+
+    /**
+     * Permet d'augmenter le nombre de virus pour une ville donnée en fonction du contexte : éclosion ou simple propagation
+     * @param city  la ville subissant l'invasion de virus
+     * @param cityName  le nom de la ville
+     * @param virusName le nom du virus
+     * @param numVirusToAdd le nombre de virus à ajouter à la ville
+     */
+    increaseVirusLevelForCity(city, cityName, virusName, numVirusToAdd) {
+        // Vérification de l'éclosion de la propagation
+        if (this.isPropagationOutbreaking(city, virusName, numVirusToAdd)) {
+            // Ajout d'une éclosion à l'ensemble du jeu
+            this._numberOfOutbreaksGetted++;
+            console.info("Éclosion n° " + this._numberOfOutbreaksGetted + " en cours dans la ville de " + cityName + " pour le virus " + virusName + " !");
+
+            var alreadyOutbreakedCities = [cityName];
+
+            // La limite a été dépassée : éclosion : on est donc au maximum de virus
+            city.viruses[virusName].level = GameConstants.MAX_LEVEL_VIRUS_PER_CITY;
+            this.propagateVirusToLinkedCities(cityName, virusName, alreadyOutbreakedCities);
+
+        } else {
+            city.viruses[virusName].level = city.viruses[virusName].level + numVirusToAdd;
+            console.info("Niveau de propagation pour la ville " + cityName + " : " + city.viruses[virusName].level);
+        }
     }
 
     /**
