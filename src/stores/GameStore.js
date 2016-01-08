@@ -69,8 +69,9 @@ class GameStore extends EventEmitter {
         var nbCardsPerArray = this._nonInfectedCitiesByVirus.length / GameConstants.EPIDEMIC_NUMBER;
 
         // Découpage de la pile de cartes en X tas
-        for (let i = 0 , j = this._nonInfectedCitiesByVirus.length ; i < j; i += nbCardsPerArray) {
-            let tempCardArray = this._nonInfectedCitiesByVirus.slice(i , i + nbCardsPerArray);
+        for (let i = 0, j = this._nonInfectedCitiesByVirus.length; i < j; i += nbCardsPerArray) {
+            // Le -1 permet de réaliser des tableaux équitables : 0 -> X / X + 1 -> Y / etc.
+            let tempCardArray = this._nonInfectedCitiesByVirus.slice(i , i + nbCardsPerArray - 1);
 
             // Ajout de l'évènement d'épidémie et mélange
             tempCardArray.push(GameConstants.EPIDEMIC_TAG);
@@ -305,20 +306,20 @@ class GameStore extends EventEmitter {
         // Ajout de X virus en fonction du niveau de propagation actuel
         for (var i = 0; i < this._propagationVirusLevel; i++) {
 
-            // Augmentation du nombre de propagation à chaque propagation
-            this._numberOfPropagationsGetted++;
-            console.info("Propagation n° : " + this._numberOfPropagationsGetted);
+            console.info("Propagation n° : " + ( this._numberOfPropagationsGetted + 1 ));
 
             // Afin de savoir s'il s'agit d'une épidémie  ou d'une simple propagation on vérifie que le nombre de
             // propagation déjà effectué correspond à un index d'épidémie.
             if (this._epidemicIndexes.indexOf(this._numberOfPropagationsGetted) === -1) {
-
                 this.classicPropagation();
 
             } else {
                 // Gestion de l'épidémie
                 this.epidemicPropagation();
             }
+
+            // Augmentation du nombre de propagation à chaque propagation
+            this._numberOfPropagationsGetted++;
 
             console.info(this._nonInfectedCitiesByVirus);
             console.info(this._alreadyInfectedCitiesByVirus);
