@@ -297,6 +297,8 @@ class GameStore extends EventEmitter {
      *  - une épidémie : récupération de la dernière carte de la pile : ajout de 3 virus, remise dans la pile de toutes les villes
      */
     propagateVirus() {
+        if (this.getSelectedPlayerName() === null)
+            return;
 
         console.info("Niveau de propagation : " + this._propagationVirusLevel);
 
