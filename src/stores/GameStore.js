@@ -493,6 +493,36 @@ class GameStore extends EventEmitter {
 
 
 
+    /*******************************************
+     *   Méthodes liées aux boutons d'actions  *
+     *******************************************/
+
+    /**
+     * Permet de savoir si une ville peut être soignée d'un virus : elle doit donc avoir au moins un virus du type voulu
+     * @param virusName le nom du virus à soigner
+     * @returns {boolean}
+     */
+    canCleanVirus(virusName) {
+        var currentPlayerName = this.getSelectedPlayerName();
+        if (currentPlayerName === null)
+            return false;
+
+        var currentPlayer = null;
+
+        for (let player of this._players) {
+            if (player.name === currentPlayerName) {
+                currentPlayer = player;
+                break;
+            }
+        }
+
+        var currentCity = this.findCityByName(currentPlayer.cityName);
+
+        return currentCity.viruses[virusName].level > 0;
+    }
+
+
+
     /********************************************
      *          Gestion des évènements          *
      ********************************************/

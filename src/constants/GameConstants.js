@@ -5,6 +5,7 @@
 export const GameConstants = {
     NUMBER_OF_ALLOWED_ACTIONS: 2,
     WEBSOCKET_SERVER_URL: '192.168.0.29:9090',
+    NB_VIRUS: 2,
     VIRUS_A: "virus 1",
     VIRUS_B: "virus 2",
     VIRUS_A_COLOR: "#FFEB3B",
