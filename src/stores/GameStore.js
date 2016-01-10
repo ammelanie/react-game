@@ -101,7 +101,7 @@ class GameStore extends EventEmitter {
     }
 
     /**
-     * Retourne le joueur selectionné s'il existe
+     * Retourne le nom du joueur selectionné s'il existe
      * @returns {string/null}   retourne le joueur selectionné ou null
      */
     getSelectedPlayerName() {
