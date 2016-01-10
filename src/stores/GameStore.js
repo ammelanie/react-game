@@ -132,8 +132,6 @@ class GameStore extends EventEmitter {
         if (playerName === null)
             return;
 
-        this.activatePlayer(playerName);
-
         console.info("Déplacement du joueur " + playerName + " vers la ville " + cityName);
 
         for (let player of this._players) {
