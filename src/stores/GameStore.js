@@ -28,6 +28,7 @@ class GameStore extends EventEmitter {
         this._players = Data.players();
         this._cities = Data.cities();
         this._paths = Data.paths();
+        this._news = [];
 
 
         /*****************************************************************
@@ -86,6 +87,13 @@ class GameStore extends EventEmitter {
         console.info("Épidémie index : " + this._epidemicIndexes);
     }
 
+    /**
+     * Récupère l'ensemble des informations du jeu
+     * @returns {Array}
+     */
+    getAllNews() {
+        return this._news;
+    }
 
 
     /*********************************************
@@ -338,6 +346,7 @@ class GameStore extends EventEmitter {
         var virusName = newInfectedCityByVirus[1];
 
         console.info("Propagation du virus " + virusName + " sur la ville " + cityName);
+        this._news.push("Propagation du virus " + virusName + " sur la ville " + cityName);
 
         // Mise à jour du niveau d'infection par le virus pour la ville si elle peut être infecté
         var city = this.findCityByName(cityName);
@@ -359,6 +368,7 @@ class GameStore extends EventEmitter {
         this.managePropagationLevel();
 
         console.info("Nouvelle épidémie - épidémie n°" + this._numberOfEpidemicGetted);
+        this._news.push("Nouvelle épidémie !");
 
         var cityToInfectData;
         var cityToInfect;
@@ -379,6 +389,7 @@ class GameStore extends EventEmitter {
         var virusName = cityToInfectData[1];
 
         console.info("Épidémie du virus " + virusName + " sur la ville " + cityName);
+        this._news.push("Épidémie du virus " + virusName + " sur la ville " + cityName);
 
         this.increaseVirusLevelForCity(cityToInfect, cityName, virusName, GameConstants.EPIDEMIC_INCREASE);
 
@@ -431,6 +442,7 @@ class GameStore extends EventEmitter {
             } else {
                 var newVirusLevelForCity = ++city.viruses[virusName].level;
                 console.info("Infection de la ville " + cityNameToInfect + " passage du niveau de virus à " + newVirusLevelForCity);
+                this._news.push("Infection de la ville " + cityNameToInfect + " passage du niveau de virus à " + newVirusLevelForCity);
             }
         }
     }
@@ -448,6 +460,7 @@ class GameStore extends EventEmitter {
             // Ajout d'une éclosion à l'ensemble du jeu
             this._numberOfOutbreaksGetted++;
             console.info("Éclosion n° " + this._numberOfOutbreaksGetted + " en cours dans la ville de " + cityName + " pour le virus " + virusName + " !");
+            this._news.push("Éclosion n° " + this._numberOfOutbreaksGetted + " en cours dans la ville de " + cityName + " pour le virus " + virusName + " !");
 
             var alreadyOutbreakedCities = [cityName];
 
@@ -518,6 +531,7 @@ class GameStore extends EventEmitter {
         var currentCity = this.findCityByName(currentPlayer.cityName);
 
         console.info("Soin du virus " + virusName + " sur la ville de " + currentPlayer.cityName);
+        this._news.push("Soin du virus " + virusName + " sur la ville de " + currentPlayer.cityName);
         currentCity.viruses[virusName].level--;
     }
 
