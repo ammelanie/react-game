@@ -28,5 +28,7 @@ export const GameConstants = {
     CITIES_CHANGE_EVENT: "cities_change_event",
 
     // Style
-    MARGIN_LEFT_MAP: "100px"
+    HEIGHT_MAP: "700px",
+    ACTION_BAR_PADDING: "100px",
+    MARGIN_LEFT_MAP: (100 + 100) + "px" // 100 + ACTION_BAR_PADDING value
 };

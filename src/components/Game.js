@@ -30,7 +30,10 @@ class Game extends React.Component {
                 float: "right"
             },
             action_bar: {
-                float: "left"
+                float: "left",
+                height: GameConstants.HEIGHT_MAP,
+                borderRight: "1px solid black",
+                paddingRight: GameConstants.ACTION_BAR_PADDING
             }
         };
 
@@ -40,7 +43,7 @@ class Game extends React.Component {
                     <ActionBar />
                 </div>
                 <div style={styles.map_elements}>
-                    <svg id="game-container" width="1000px" height="1000px">
+                    <svg id="game-container" width="1000px" height={GameConstants.HEIGHT_MAP}>
                         <FranceMap />
                         <Paths />
                     </svg>
