@@ -2,6 +2,8 @@
  * Created by melanie on 03/01/16.
  */
 
+'use strict';
+
 export default {
 
     /**

@@ -2,6 +2,8 @@
  * Created by melanie on 30/11/15.
  */
 
+'use strict';
+
 import React from 'react';
 
 /**  Classe représentant une ancienne région de France */

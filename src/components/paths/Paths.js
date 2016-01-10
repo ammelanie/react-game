@@ -2,6 +2,8 @@
  * Created by melanie on 25/12/15.
  */
 
+'use strict';
+
 import React from 'react';
 
 import GameStore from '../../stores/GameStore';

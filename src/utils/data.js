@@ -2,6 +2,8 @@
  * Created by melanie on 06/01/16.
  */
 
+'use strict';
+
 import {GameConstants} from '../constants/GameConstants';
 
 /************************************************

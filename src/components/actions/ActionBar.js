@@ -2,6 +2,8 @@
  * Created by melanie on 10/01/16.
  */
 
+'use strict';
+
 import React from 'react';
 
 import CleanVirusActions from './CleanVirusActions'

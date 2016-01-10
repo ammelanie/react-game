@@ -2,6 +2,8 @@
  * Created by melanie on 01/12/15.
  */
 
+'use strict';
+
 import React from 'react';
 
 import BigAreaMap from './BigAreaMap';

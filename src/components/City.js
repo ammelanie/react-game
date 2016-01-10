@@ -2,6 +2,8 @@
  * Created by melanie on 21/12/15.
  */
 
+'use strict';
+
 import React from 'react';
 
 import GameActions from '../actions/GameActions';

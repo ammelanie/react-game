@@ -2,6 +2,8 @@
  * Created by melanie on 23/12/15.
  */
 
+'use strict';
+
 export const GameConstants = {
     NUMBER_OF_ALLOWED_ACTIONS: 2,
     WEBSOCKET_SERVER_URL: '192.168.0.29:9090',

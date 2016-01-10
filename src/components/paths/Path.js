@@ -2,6 +2,8 @@
  * Created by melanie on 21/12/15.
  */
 
+'use strict';
+
 import React from 'react';
 
 /**  Classe représentant un chemin entre deux villes */
