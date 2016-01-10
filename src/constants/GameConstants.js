@@ -7,6 +7,8 @@ export const GameConstants = {
     WEBSOCKET_SERVER_URL: '192.168.0.29:9090',
     VIRUS_A: "virus 1",
     VIRUS_B: "virus 2",
+    VIRUS_A_COLOR: "#FFEB3B",
+    VIRUS_B_COLOR: "#4CAF50",
     DEFAULT_PROPAGATION_BASE_LEVEL: 2,
     EPIDEMIC_NUMBER: 4,
     EPIDEMIC_TAG: "EPIDEMIC",

@@ -70,7 +70,7 @@ class Viruses extends React.Component {
                         key={cityName + '-' + virusName}
                         name={virusName}
                         cityName={cityName}
-                        color= {virusName === GameConstants.VIRUS_A  ? "#FFEB3B" : "#4CAF50"}
+                        color= {virusName === GameConstants.VIRUS_A  ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR}
                     />
                 );
             }
