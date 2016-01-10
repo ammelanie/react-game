@@ -8,6 +8,8 @@ import GameStore from '../../stores/GameStore';
 
 import {GameConstants} from '../../constants/GameConstants';
 
+import GameActions from '../../actions/GameActions';
+
 /**  Classe représentant un bouton de soin d'un virus particulier */
 class CleanVirusButton extends React.Component {
 
@@ -25,6 +27,13 @@ class CleanVirusButton extends React.Component {
     }
 
     /**
+     * Callback du clic sur le bouton
+     */
+    handleClick() {
+        GameActions.cleanVirusForCurrentCity(this.props.name);
+    }
+
+    /**
      * Callback appelé lorsque le store des joueurs émet un changement
      * Cela va mettre à jour l'état du composant afin de pouvoir activer ou non le bouton de soin
      */
@@ -38,6 +47,7 @@ class CleanVirusButton extends React.Component {
      */
     componentDidMount() {
         GameStore.addChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onChange);
+        GameStore.addChangeListener(GameConstants.CITIES_CHANGE_EVENT, this.onChange);
     }
 
     /**
@@ -46,6 +56,7 @@ class CleanVirusButton extends React.Component {
      */
     componentWillUnmount() {
         GameStore.removeChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onChange);
+        GameStore.removeChangeListener(GameConstants.CITIES_CHANGE_EVENT, this.onChange);
     }
 
     /**
@@ -68,7 +79,7 @@ class CleanVirusButton extends React.Component {
 
         return (
             <div>
-                <button style={button_style} href="#" {...buttonOptions}> Soigner {this.props.name} </button>
+                <button onClick={this.handleClick.bind(this)} style={button_style} {...buttonOptions}> Soigner {this.props.name} </button>
             </div>
         );
     }

@@ -50,6 +50,17 @@ export default {
     },
 
     /**
+     * Désactivation du virus passer en paramètre pour la ville courante
+     * @param virusName nom du virus à soigner
+     */
+    cleanVirusForCurrentCity(virusName) {
+        GameDispatcher.dispatch({
+            type: GameConstants.VIRUS_CLEANING,
+            virusName: virusName
+        });
+    },
+
+    /**
      * Écoute du server de websocket
      */
     listenToWebSocketServer() {

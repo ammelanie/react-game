@@ -512,6 +512,15 @@ class GameStore extends EventEmitter {
         return currentCity.viruses[virusName].level > 0;
     }
 
+    cleanVirus(virusName) {
+       var currentPlayer = this.getSelectedPlayer();
+
+        var currentCity = this.findCityByName(currentPlayer.cityName);
+
+        console.info("Soin du virus " + virusName + " sur la ville de " + currentPlayer.cityName);
+        currentCity.viruses[virusName].level--;
+    }
+
 
 
     /********************************************
@@ -581,6 +590,12 @@ GameDispatcher.register((action) => {
         // Lancement d'une propagation de virus
         case GameConstants.VIRUS_PROPAGATION:
             _GameStore.propagateVirus();
+            _GameStore.emitChange(GameConstants.CITIES_CHANGE_EVENT);
+            break;
+
+        // Soin d'un virus sur la ville courante
+        case GameConstants.VIRUS_CLEANING:
+            _GameStore.cleanVirus(action.virusName);
             _GameStore.emitChange(GameConstants.CITIES_CHANGE_EVENT);
             break;
 
