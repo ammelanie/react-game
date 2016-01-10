@@ -29,7 +29,7 @@ class Game extends React.Component {
                 position: "absolute",
                 top: "0px",
                 left: GameConstants.MARGIN_LEFT_MAP,
-                float: "right"
+                float: "left"
             },
             action_bar: {
                 float: "left",
@@ -45,14 +45,14 @@ class Game extends React.Component {
                 <div style={styles.action_bar}>
                     <ActionBar />
                 </div>
-                <div style={styles.map_elements}>
+                <div>
                     <svg id="game-container" width="1000px" height={GameConstants.HEIGHT_MAP}>
                         <FranceMap />
                         <Paths />
                     </svg>
 
-                    <Players />
-                    <Viruses />
+                    <Players style={styles.map_elements} />
+                    <Viruses style={styles.map_elements} />
                 </div>
             </div>
         );

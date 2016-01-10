@@ -80,7 +80,7 @@ class Players extends React.Component {
         }
 
         return (
-            <div>
+            <div style={this.props.style}>
                 {players}
             </div>
         );
@@ -88,3 +88,12 @@ class Players extends React.Component {
 }
 
 export default Players;
+
+/**
+ * Vérification des propriétés de l'objet
+ * @type {object}
+ * @property {object} style                  - Required          - style à appliquer à la div parente
+ */
+Players.propTypes = {
+    style: React.PropTypes.object.isRequired
+};

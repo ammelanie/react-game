@@ -78,7 +78,7 @@ class Viruses extends React.Component {
 
 
         return (
-            <div>
+            <div style={this.props.style}>
                 {viruses}
             </div>
         );
@@ -86,3 +86,12 @@ class Viruses extends React.Component {
 }
 
 export default Viruses;
+
+/**
+ * Vérification des propriétés de l'objet
+ * @type {object}
+ * @property {object} style                  - Required          - style à appliquer à la div parente
+ */
+Viruses.propTypes = {
+    style: React.PropTypes.object.isRequired
+};
