@@ -133,7 +133,7 @@ class GameStore extends EventEmitter {
 
     /**
      * Déplacement du joueur selectionné sur une ville cliquée
-     * @param currentPlayer  le nom du joueur qui doit se déplacer
+     * @param currentPlayer  le joueur qui doit se déplacer
      * @param cityName  le nom de la ville où le joueur doit se rendre
      */
     movePlayerToCity(cityName, currentPlayer = this.getSelectedPlayer()) {
@@ -525,6 +525,10 @@ class GameStore extends EventEmitter {
         return currentCity.viruses[virusName].level > 0;
     }
 
+    /**
+     * Permet de soigner d'un cube virus la ville courante
+     * @param virusName nom du virus à soigner
+     */
     cleanVirus(virusName) {
        var currentPlayer = this.getSelectedPlayer();
 
