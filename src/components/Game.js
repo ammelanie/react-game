@@ -33,7 +33,8 @@ class Game extends React.Component {
                 float: "left",
                 height: GameConstants.HEIGHT_MAP,
                 borderRight: "1px solid black",
-                paddingRight: GameConstants.ACTION_BAR_PADDING
+                paddingRight: GameConstants.ACTION_BAR_PADDING,
+                width: GameConstants.ACTION_BAR_WIDTH
             }
         };
 

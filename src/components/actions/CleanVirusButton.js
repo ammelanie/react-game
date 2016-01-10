@@ -67,7 +67,8 @@ class CleanVirusButton extends React.Component {
 
         var button_style = {
             backgroundColor: (this.props.name === GameConstants.VIRUS_A ) ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR,
-            color: "black"
+            color: "black",
+            marginBottom: "5px"
         };
 
         var buttonOptions = {};
