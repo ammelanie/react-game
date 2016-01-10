@@ -25,5 +25,8 @@ export const GameConstants = {
     // Events
     PATHS_CHANGE_EVENT: "paths_change_event",
     PLAYERS_CHANGE_EVENT: "players_change_event",
-    CITIES_CHANGE_EVENT: "cities_change_event"
+    CITIES_CHANGE_EVENT: "cities_change_event",
+
+    // Style
+    MARGIN_LEFT_MAP: "100px"
 };
