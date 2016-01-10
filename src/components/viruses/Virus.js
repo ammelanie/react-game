@@ -36,7 +36,7 @@ class Virus extends React.Component {
                 bottom: "0px",
                 width: "5px",
                 height: city.viruses[this.props.name].level * 10,
-                backgroundColor: ( this.props.name === GameConstants.VIRUS_A ) ? "#FFEB3B" : "#4CAF50"
+                backgroundColor: this.props.color
             },
             separator_A: {
                 position: "absolute",
@@ -72,8 +72,10 @@ export default Virus;
  * @type {object}
  * @property {string} name                  - Required          - nom du virus
  * @property {string} cityName              - Required          - nom de la ville où est le virus
+ * @property {string} color                 - Required          - couleur du virus
  */
 Virus.propTypes = {
     name: React.PropTypes.string.isRequired,
-    cityName: React.PropTypes.string.isRequired
+    cityName: React.PropTypes.string.isRequired,
+    color: React.PropTypes.string.isRequired
 };
