@@ -95,6 +95,22 @@ class GameStore extends EventEmitter {
         return this._news;
     }
 
+    /**
+     * Récupère le nombre d'éclosions
+     * @returns {number}
+     */
+    getOutbreaks() {
+        return this._numberOfOutbreaksGetted;
+    }
+
+    /**
+     * Récupère le nombre d'épidémies déjà tombées
+     * @returns {number}
+     */
+    getEpidemics() {
+        return this._numberOfEpidemicGetted;
+    }
+
 
     /*********************************************
      *   Méthodes liées uniquement aux joueurs   *
@@ -434,6 +450,7 @@ class GameStore extends EventEmitter {
 
                 this._numberOfOutbreaksGetted++;
                 console.info("Éclosion n° " + this._numberOfOutbreaksGetted + " en cours dans la ville de " + cityNameToInfect + " pour le virus " + virusName + " !");
+                this._news.push("Éclosion n° " + this._numberOfOutbreaksGetted + " en cours dans la ville de " + cityNameToInfect + " pour le virus " + virusName + " !");
 
                 alreadyOutbreakedCities.push(cityNameToInfect);
 

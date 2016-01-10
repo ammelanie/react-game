@@ -18,6 +18,7 @@ export const GameConstants = {
     MAX_LEVEL_VIRUS_PER_CITY: 3,
     PROPAGATION_INCREASE: 1,
     EPIDEMIC_INCREASE: 3,
+    MAX_ECLOSIONS: 5,
 
     // Actions
     TOGGLE_PATHS: "toggle_paths",
