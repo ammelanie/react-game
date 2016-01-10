@@ -33,7 +33,8 @@ export const GameConstants = {
 
     // Style
     HEIGHT_MAP: "700px",
+    WIDTH_MAP: "600px",
     ACTION_BAR_PADDING: "50px",
     ACTION_BAR_WIDTH: "150px",
-    MARGIN_LEFT_MAP: (100 + 100) + "px" // 100 +  ACTION_BAR_WIDTH
+    MARGIN_LEFT_MAP: (100 + 150) + "px" // 100 +  ACTION_BAR_WIDTH
 };

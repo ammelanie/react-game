@@ -11,6 +11,7 @@ import Paths from './paths/Paths';
 import Players from './players/Players';
 import Viruses from './viruses/Viruses';
 import ActionBar from './actions/ActionBar';
+import InformationBoard from './informations/InformationBoard';
 
 import {GameConstants} from '../constants/GameConstants';
 
@@ -25,11 +26,14 @@ class Game extends React.Component {
     render() {
 
         var styles = {
+            map: {
+                float: "left",
+                marginLeft: GameConstants.ACTION_BAR_PADDING
+            },
             map_elements: {
                 position: "absolute",
                 top: "0px",
-                left: GameConstants.MARGIN_LEFT_MAP,
-                float: "left"
+                left: GameConstants.MARGIN_LEFT_MAP
             },
             action_bar: {
                 float: "left",
@@ -37,6 +41,12 @@ class Game extends React.Component {
                 borderRight: "1px solid black",
                 paddingRight: GameConstants.ACTION_BAR_PADDING,
                 width: GameConstants.ACTION_BAR_WIDTH
+            },
+            information_board: {
+                float: "left",
+                height: GameConstants.HEIGHT_MAP,
+                borderLeft: "1px solid black",
+                paddingLeft: GameConstants.ACTION_BAR_PADDING,
             }
         };
 
@@ -45,14 +55,17 @@ class Game extends React.Component {
                 <div style={styles.action_bar}>
                     <ActionBar />
                 </div>
-                <div>
-                    <svg id="game-container" width="1000px" height={GameConstants.HEIGHT_MAP}>
+                <div style={styles.map}>
+                    <svg id="game-container" width={GameConstants.WIDTH_MAP} height={GameConstants.HEIGHT_MAP}>
                         <FranceMap />
                         <Paths />
                     </svg>
 
                     <Players style={styles.map_elements} />
                     <Viruses style={styles.map_elements} />
+                </div>
+                <div style={styles.information_board}>
+                    <InformationBoard />
                 </div>
             </div>
         );
