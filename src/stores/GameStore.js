@@ -101,13 +101,13 @@ class GameStore extends EventEmitter {
     }
 
     /**
-     * Retourne le nom du joueur selectionné s'il existe
+     * Retourne le joueur selectionné s'il existe
      * @returns {string/null}   retourne le joueur selectionné ou null
      */
-    getSelectedPlayerName() {
+    getSelectedPlayer() {
         for (var player of this._players) {
             if (player.selected) {
-                return player.name;
+                return player;
             }
         }
         return null;
@@ -125,17 +125,17 @@ class GameStore extends EventEmitter {
 
     /**
      * Déplacement du joueur selectionné sur une ville cliquée
-     * @param playerName  le nom du joueur qui doit se déplacer
+     * @param currentPlayer  le nom du joueur qui doit se déplacer
      * @param cityName  le nom de la ville où le joueur doit se rendre
      */
-    movePlayerToCity(cityName, playerName = this.getSelectedPlayerName()) {
-        if (playerName === null)
+    movePlayerToCity(cityName, currentPlayer = this.getSelectedPlayer()) {
+        if (currentPlayer === null)
             return;
 
-        console.info("Déplacement du joueur " + playerName + " vers la ville " + cityName);
+        console.info("Déplacement du joueur " + currentPlayer.name + " vers la ville " + cityName);
 
         for (let player of this._players) {
-            if (player.name === playerName) {
+            if (player.name === currentPlayer.name) {
                 player.cityName = cityName;
             }
         }
@@ -296,7 +296,7 @@ class GameStore extends EventEmitter {
      *  - une épidémie : récupération de la dernière carte de la pile : ajout de 3 virus, remise dans la pile de toutes les villes
      */
     propagateVirus() {
-        if (this.getSelectedPlayerName() === null)
+        if (this.getSelectedPlayer() === null)
             return;
 
         console.info("Niveau de propagation : " + this._propagationVirusLevel);
@@ -503,18 +503,9 @@ class GameStore extends EventEmitter {
      * @returns {boolean}
      */
     canCleanVirus(virusName) {
-        var currentPlayerName = this.getSelectedPlayerName();
-        if (currentPlayerName === null)
+        var currentPlayer = this.getSelectedPlayer();
+        if (currentPlayer === null)
             return false;
-
-        var currentPlayer = null;
-
-        for (let player of this._players) {
-            if (player.name === currentPlayerName) {
-                currentPlayer = player;
-                break;
-            }
-        }
 
         var currentCity = this.findCityByName(currentPlayer.cityName);
 
