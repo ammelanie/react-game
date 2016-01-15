@@ -22,7 +22,7 @@ class CleanVirusActions extends React.Component {
         var cleanVirusButtons = [];
         var viruses = [GameConstants.VIRUS_A, GameConstants.VIRUS_B];
 
-        // Affichage des joueurs sur la carte
+        // Affichage des boutons de guérison de virus sur la carte
         for ( let i = 0; i <  GameConstants.NB_VIRUS; i++) {
 
             cleanVirusButtons.push(
