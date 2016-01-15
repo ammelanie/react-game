@@ -26,6 +26,7 @@ export const GameConstants = {
     MOVE_PLAYER: "move_player",
     VIRUS_PROPAGATION: "virus_propagation",
     VIRUS_CLEANING: "virus_cleaning",
+    INIT_GAME: "init_game",
 
     // Events
     PATHS_CHANGE_EVENT: "paths_change_event",

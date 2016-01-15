@@ -15,9 +15,19 @@ import InformationBoard from './informations/InformationBoard';
 
 import {GameConstants} from '../constants/GameConstants';
 
+import GameActions from '../actions/GameActions';
+
 
 /**  Classe représentant l'ensemble du jeu */
 class Game extends React.Component {
+
+    /**
+     * Callback déclenché lorsque le composant est monté
+     * Initialisation du plateau de jeu
+     */
+    componentDidMount() {
+        GameActions.initGame();
+    }
 
     /**
      * Permet de rendre l'ensemble du jeu

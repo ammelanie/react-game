@@ -314,6 +314,27 @@ class GameStore extends EventEmitter {
      *********************************************/
 
     /**
+     * Fonction d'initialisation du jeu
+     * 3x3 cartes sont tirées du paquets de cartes des villes non contaminées
+     * 3 premières : 3 cubes
+     * 3 suivantes : 2 cubes
+     * 3 dernières : 1 cube
+     */
+    initGame() {
+        this._news.push("=== Initialisation du jeu avec une infection des villes de niveau 3 ===");
+        for (let i = 1, levelVirus = 3; i <= 9; i++) {
+
+            this.classicPropagation(levelVirus);
+
+            if ( i % 3 === 0 ) {
+                levelVirus--;
+                if ( levelVirus != 0 )
+                    this._news.push("=== Initialisation du jeu avec une infection des villes de niveau " + levelVirus + " ===");
+            }
+        }
+    }
+
+    /**
      * Gestion de la propagation du virus à chaque tour de joueur
      * La propagation peut être :
      *  - une propagation classique : infection d'une ville avec un cran de virus
@@ -351,8 +372,9 @@ class GameStore extends EventEmitter {
     /**
      * Gestion d'une propagation classique
      *  - Récupération de la dernière ville de la pile des "Villes pouvant être infectées" : ajout d'un cran de virus
+     *  @param increaseVirusLevelBy     default GameConstants.PROPAGATION_INSCREASE - nombre de cubes virus à propager
      */
-    classicPropagation() {
+    classicPropagation(increaseVirusLevelBy = GameConstants.PROPAGATION_INCREASE) {
         // récupération de la ville et virus à propager sous la forme ["villeA","virus1"]
         var newInfectedCityByVirus = this._nonInfectedCitiesByVirus.pop();
 
@@ -368,7 +390,7 @@ class GameStore extends EventEmitter {
         var city = this.findCityByName(cityName);
 
         if (city.canBeInfected) {
-            this.increaseVirusLevelForCity(city, cityName, virusName, GameConstants.PROPAGATION_INCREASE);
+            this.increaseVirusLevelForCity(city, cityName, virusName, increaseVirusLevelBy);
         }
     }
 
@@ -631,6 +653,12 @@ GameDispatcher.register((action) => {
         // Soin d'un virus sur la ville courante
         case GameConstants.VIRUS_CLEANING:
             _GameStore.cleanVirus(action.virusName);
+            _GameStore.emitChange(GameConstants.CITIES_CHANGE_EVENT);
+            break;
+
+        // Initialisation du jeu avec propagation du virus sur 9 villes
+        case GameConstants.INIT_GAME:
+            _GameStore.initGame();
             _GameStore.emitChange(GameConstants.CITIES_CHANGE_EVENT);
             break;
 
