@@ -12,6 +12,8 @@ import {GameConstants} from '../../constants/GameConstants';
 
 import GameActions from '../../actions/GameActions';
 
+import ButtonAction from './ButtonAction'
+
 /**  Classe représentant un bouton de soin d'un virus particulier */
 class CleanVirusButton extends React.Component {
 
@@ -67,24 +69,14 @@ class CleanVirusButton extends React.Component {
      */
     render() {
 
-        var button_style = {
-            backgroundColor: (this.props.name === GameConstants.VIRUS_A ) ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR,
-            color: "black",
-            marginBottom: "5px"
-        };
-
-        var buttonOptions = {};
-        if (this.state.disabled) {
-            buttonOptions['disabled'] = 'disabled';
-            button_style['backgroundColor'] = "#CCCCCC";
-            button_style['color'] = "grey";
-        }
-
         return (
-            <div>
-                <button onClick={this.handleClick.bind(this)} style={button_style} {...buttonOptions}> Soigner {this.props.name} </button>
-            </div>
-        );
+            <ButtonAction
+                text={"Soigner le virus " + this.props.name}
+                backgroundColor={GameConstants.VIRUS_A === this.props.name ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR}
+                disabled={this.state.disabled}
+                onClickEvent={this.handleClick.bind(this)}
+            />
+        )
     }
 }
 

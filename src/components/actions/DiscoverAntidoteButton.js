@@ -10,6 +10,8 @@ import GameActions from '../../actions/GameActions';
 
 import GameStore from '../../stores/GameStore';
 
+import ButtonAction from './ButtonAction';
+
 /**  Classe représentant un bouton d'antidote pour un virus */
 class DiscoverAntidoteButton extends React.Component {
 
@@ -66,23 +68,13 @@ class DiscoverAntidoteButton extends React.Component {
      */
     render() {
 
-        var button_style = {
-            backgroundColor: (this.props.name === GameConstants.VIRUS_A ) ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR,
-            color: "black",
-            marginBottom: "5px"
-        };
-
-        var buttonOptions = {};
-        if (this.state.disabled) {
-            buttonOptions['disabled'] = 'disabled';
-            button_style['backgroundColor'] = "#CCCCCC";
-            button_style['color'] = "grey";
-        }
-
         return (
-            <div>
-                <button onClick={this.handleClick.bind(this)} style={button_style} {...buttonOptions}>Antidote pour {this.props.name} trouvé</button>
-            </div>
+            <ButtonAction
+                text={"Antidote pour le virus " + this.props.name + " trouvé"}
+                backgroundColor={GameConstants.VIRUS_A === this.props.name ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR}
+                disabled={this.state.disabled}
+                onClickEvent={this.handleClick.bind(this)}
+            />
         )
     }
 }
