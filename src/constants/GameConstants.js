@@ -34,6 +34,7 @@ export const GameConstants = {
     PLAYERS_CHANGE_EVENT: "players_change_event",
     CITIES_CHANGE_EVENT: "cities_change_event",
     DISCOVER_ANTIDOTE_EVENT: "discover_antidote_event",
+    GAME_CHANGE_EVENT: "game_change_event",
 
     // Style
     HEIGHT_MAP: "700px",

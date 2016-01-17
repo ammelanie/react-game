@@ -35,6 +35,9 @@ class GameStore extends EventEmitter {
         this._antidotes[GameConstants.VIRUS_A] = false;
         this._antidotes[GameConstants.VIRUS_B] = false;
 
+        // Permet de savoir si les joueurs ont gagné ou perdu
+        this._havePlayersWon = false;
+
         /*****************************************************************
          * Variables permettant la gestion des propagations et épidémies *
          *****************************************************************/
@@ -113,6 +116,14 @@ class GameStore extends EventEmitter {
      */
     getEpidemics() {
         return this._numberOfEpidemicGetted;
+    }
+
+    /**
+     * Permet de savoir si les joueurs ont gagné
+     * @returns {boolean}
+     */
+    getHavePlayersWon() {
+        return this._havePlayersWon;
     }
 
 
@@ -379,22 +390,24 @@ class GameStore extends EventEmitter {
      *  @param increaseVirusLevelBy     default GameConstants.PROPAGATION_INSCREASE - nombre de cubes virus à propager
      */
     classicPropagation(increaseVirusLevelBy = GameConstants.PROPAGATION_INCREASE) {
-        // récupération de la ville et virus à propager sous la forme ["villeA","virus1"]
-        var newInfectedCityByVirus = this._nonInfectedCitiesByVirus.pop();
+        if (this._nonInfectedCitiesByVirus.length > 0) {
+            // récupération de la ville et virus à propager sous la forme ["villeA","virus1"]
+            var newInfectedCityByVirus = this._nonInfectedCitiesByVirus.pop();
 
-        this._alreadyInfectedCitiesByVirus.push(newInfectedCityByVirus);
+            this._alreadyInfectedCitiesByVirus.push(newInfectedCityByVirus);
 
-        var cityName = newInfectedCityByVirus[0];
-        var virusName = newInfectedCityByVirus[1];
+            var cityName = newInfectedCityByVirus[0];
+            var virusName = newInfectedCityByVirus[1];
 
-        console.info("Propagation du virus " + virusName + " sur la ville " + cityName);
-        this._news.push("Propagation du virus " + virusName + " sur la ville " + cityName);
+            console.info("Propagation du virus " + virusName + " sur la ville " + cityName);
+            this._news.push("Propagation du virus " + virusName + " sur la ville " + cityName);
 
-        // Mise à jour du niveau d'infection par le virus pour la ville si elle peut être infecté
-        var city = this.findCityByName(cityName);
+            // Mise à jour du niveau d'infection par le virus pour la ville si elle peut être infecté
+            var city = this.findCityByName(cityName);
 
-        if (city.canBeInfected) {
-            this.increaseVirusLevelForCity(city, cityName, virusName, increaseVirusLevelBy);
+            if (city.canBeInfected) {
+                this.increaseVirusLevelForCity(city, cityName, virusName, increaseVirusLevelBy);
+            }
         }
     }
 
@@ -633,6 +646,48 @@ class GameStore extends EventEmitter {
         this.off(eventTag, callback);
     }
 
+
+
+    /********************************************
+     *        Gestion des conditions fin        *
+     ********************************************/
+
+    /**
+     * Détermine si les joueurs ont gagné
+     * Condition de victoire : trouver les antidotes pour les virus du jeu
+     * @returns {boolean}
+     */
+    havePlayersWon() {
+        if (this._antidotes[GameConstants.VIRUS_A] && this._antidotes[GameConstants.VIRUS_B]) {
+            this._news.push("VICTOIRE ! Vous êtes venus à bout des virus ! La France est sauvée !");
+            this._havePlayersWon = true;
+        }
+
+        return this._havePlayersWon;
+    }
+
+    /**
+     * Détemrine si les joueurs ont perdu
+     * Condition de perte : plus de carte dans la pile OU nombre d'éclosions trop important
+     * @returns {boolean}
+     */
+    havePlayersLost() {
+        if (this._nonInfectedCitiesByVirus.length === 0 || this._numberOfOutbreaksGetted >= GameConstants.MAX_ECLOSIONS) {
+            this._news.push("DEFAITE ! Les virus ont vaincu...");
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Permet de savoir si le jeu est fini
+     * @returns {boolean}
+     */
+    isGameEnded() {
+        return this.havePlayersLost() || this.havePlayersWon();
+    }
+
 }
 
 let _GameStore = new GameStore();
@@ -651,7 +706,6 @@ GameDispatcher.register((action) => {
 
         // Lorsque les joueurs doivent subir un changement d'état de selection
         case GameConstants.ACTIVATE_PLAYER:
-
             _GameStore.activatePlayer(action.playerName);
             _GameStore.emitChange(GameConstants.PLAYERS_CHANGE_EVENT);
             break;
@@ -671,6 +725,8 @@ GameDispatcher.register((action) => {
         case GameConstants.VIRUS_PROPAGATION:
             _GameStore.propagateVirus();
             _GameStore.emitChange(GameConstants.CITIES_CHANGE_EVENT);
+            if (_GameStore.isGameEnded())
+                _GameStore.emitChange(GameConstants.GAME_CHANGE_EVENT);
             break;
 
         // Soin d'un virus sur la ville courante
@@ -705,6 +761,8 @@ GameDispatcher.register((action) => {
         case GameConstants.DISCOVER_ANTIDOTE:
             _GameStore.discoverAntidoteForVirus(action.virusName);
             _GameStore.emitChange(GameConstants.DISCOVER_ANTIDOTE_EVENT);
+            if (_GameStore.isGameEnded())
+                _GameStore.emitChange(GameConstants.GAME_CHANGE_EVENT);
             break;
 
         default:
