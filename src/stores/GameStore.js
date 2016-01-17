@@ -325,7 +325,7 @@ class GameStore extends EventEmitter {
      * 3 dernières : 1 cube
      */
     initGame() {
-        this._news.push("=== Initialisation du jeu avec une infection des villes de niveau 3 ===");
+        this._news.push("Initialisation du jeu avec une infection des villes de niveau 3");
         for (let i = 1, levelVirus = 3; i <= 9; i++) {
 
             this.classicPropagation(levelVirus);
@@ -333,7 +333,7 @@ class GameStore extends EventEmitter {
             if ( i % 3 === 0 ) {
                 levelVirus--;
                 if ( levelVirus != 0 )
-                    this._news.push("=== Initialisation du jeu avec une infection des villes de niveau " + levelVirus + " ===");
+                    this._news.push("Initialisation du jeu avec une infection des villes de niveau " + levelVirus);
             }
         }
     }

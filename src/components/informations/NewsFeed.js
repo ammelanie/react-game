@@ -6,6 +6,8 @@
 
 import React from 'react';
 
+import GameConstants from '../../constants/GameConstants'
+
 /**  Classe représentant le fil du journal */
 class NewsFeed extends React.Component {
 
@@ -16,10 +18,9 @@ class NewsFeed extends React.Component {
     render() {
 
         var board_style = {
-                width: "600px",
-                height: "400px",
-                overflowY: "auto"
-        }
+            height: "400px",
+            overflowY: "auto"
+        };
 
         // Ajout de chacun des messages au journal de bord
         var messages = [];

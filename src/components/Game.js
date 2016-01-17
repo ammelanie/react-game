@@ -50,13 +50,15 @@ class Game extends React.Component {
                 height: GameConstants.HEIGHT_MAP,
                 borderRight: "1px solid black",
                 paddingRight: GameConstants.ACTION_BAR_PADDING,
+                paddingLeft: GameConstants.ACTION_BAR_PADDING,
                 width: GameConstants.ACTION_BAR_WIDTH
             },
             information_board: {
                 float: "left",
                 height: GameConstants.HEIGHT_MAP,
+                width: GameConstants.INFO_WIDTH,
                 borderLeft: "1px solid black",
-                paddingLeft: GameConstants.ACTION_BAR_PADDING,
+                paddingLeft: GameConstants.ACTION_BAR_PADDING
             }
         };
 
