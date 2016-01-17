@@ -76,8 +76,8 @@ class CleanVirusButton extends React.Component {
         var buttonOptions = {};
         if (this.state.disabled) {
             buttonOptions['disabled'] = 'disabled';
-            button_style['backgroundColor'] = "#CCCCCC",
-            button_style['color'] = "grey"
+            button_style['backgroundColor'] = "#CCCCCC";
+            button_style['color'] = "grey";
         }
 
         return (
