@@ -36,7 +36,7 @@ class CleanVirusButton extends React.Component {
     }
 
     /**
-     * Callback appelé lorsque le store des joueurs émet un changement
+     * Callback appelé lorsque le store emet un évènement
      * Cela va mettre à jour l'état du composant afin de pouvoir activer ou non le bouton de soin
      */
     onChange() {
