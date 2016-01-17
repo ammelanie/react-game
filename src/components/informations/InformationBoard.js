@@ -53,6 +53,7 @@ class InformationBoard extends React.Component {
     componentDidMount() {
         GameStore.addChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onChange);
         GameStore.addChangeListener(GameConstants.CITIES_CHANGE_EVENT, this.onChange);
+        GameStore.addChangeListener(GameConstants.DISCOVER_ANTIDOTE_EVENT, this.onChange);
     }
 
     /**
@@ -62,6 +63,7 @@ class InformationBoard extends React.Component {
     componentWillUnmount() {
         GameStore.removeChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onChange);
         GameStore.removeChangeListener(GameConstants.CITIES_CHANGE_EVENT, this.onChange);
+        GameStore.removeChangeListener(GameConstants.DISCOVER_ANTIDOTE_EVENT, this.onChange);
     }
 
     /**

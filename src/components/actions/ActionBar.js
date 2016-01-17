@@ -7,6 +7,7 @@
 import React from 'react';
 
 import CleanVirusActions from './CleanVirusActions'
+import DiscoverAntidoteActions from './DiscoverAntidoteActions'
 
 /**  Classe représentant la barre d'action du jeu */
 class ActionBar extends React.Component {
@@ -21,6 +22,7 @@ class ActionBar extends React.Component {
             <div>
                 <h3>Actions</h3>
                 <CleanVirusActions />
+                <DiscoverAntidoteActions />
             </div>
         );
     }

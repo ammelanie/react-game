@@ -70,6 +70,17 @@ export default {
     },
 
     /**
+     * Découverte de l'antidote pour un virus en particulier
+     * @param virusName nom du virus dont l'antidote a été trouvé
+     */
+    discoverAntidoteForVirus(virusName) {
+        GameDispatcher.dispatch({
+            type: GameConstants.DISCOVER_ANTIDOTE,
+            virusName: virusName
+        });
+    },
+
+    /**
      * Écoute du server de websocket
      */
     listenToWebSocketServer() {

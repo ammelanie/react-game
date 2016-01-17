@@ -27,11 +27,13 @@ export const GameConstants = {
     VIRUS_PROPAGATION: "virus_propagation",
     VIRUS_CLEANING: "virus_cleaning",
     INIT_GAME: "init_game",
+    DISCOVER_ANTIDOTE: "discover_antidote",
 
     // Events
     PATHS_CHANGE_EVENT: "paths_change_event",
     PLAYERS_CHANGE_EVENT: "players_change_event",
     CITIES_CHANGE_EVENT: "cities_change_event",
+    DISCOVER_ANTIDOTE_EVENT: "discover_antidote_event",
 
     // Style
     HEIGHT_MAP: "700px",

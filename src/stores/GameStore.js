@@ -30,6 +30,10 @@ class GameStore extends EventEmitter {
         this._paths = Data.paths();
         this._news = [];
 
+        // Object permettant de gérer la découverte d'un virus
+        this._antidotes = {};
+        this._antidotes[GameConstants.VIRUS_A] = false;
+        this._antidotes[GameConstants.VIRUS_B] = false;
 
         /*****************************************************************
          * Variables permettant la gestion des propagations et épidémies *
@@ -578,6 +582,25 @@ class GameStore extends EventEmitter {
         currentCity.viruses[virusName].level--;
     }
 
+    /**
+     * Permet de signaler la découverte d'un antidote pour un virus donné
+     * @param virusName nom du virus concerné
+     */
+    discoverAntidoteForVirus(virusName) {
+        this._antidotes[virusName] = true;
+        console.info("Découverte de l'antidote pour le virus " + virusName);
+        this._news.push("Découverte de l'antidote pour le virus " + virusName);
+    }
+
+    /**
+     * Permet de savoir si l'antidote a été découvert pour un virus donné
+     * @param virusName nom du virus
+     * @returns {Boolean}
+     */
+    hasAntidoteBeenDiscovered(virusName) {
+        return this._antidotes[virusName];
+    }
+
 
 
     /********************************************
@@ -671,6 +694,17 @@ GameDispatcher.register((action) => {
         case GameConstants.TOGGLE_PATHS:
             _GameStore.togglePathsForCity(action.cityName);
             _GameStore.emitChange(GameConstants.PATHS_CHANGE_EVENT);
+            break;
+
+
+        /***************************************
+         *   Evenements en lien avec antidote  *
+         ***************************************/
+
+        // Découverte d'un antidote pour un virus en pariculier
+        case GameConstants.DISCOVER_ANTIDOTE:
+            _GameStore.discoverAntidoteForVirus(action.virusName);
+            _GameStore.emitChange(GameConstants.DISCOVER_ANTIDOTE_EVENT);
             break;
 
         default:
