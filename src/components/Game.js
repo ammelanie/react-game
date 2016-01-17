@@ -21,6 +21,7 @@ import GameStore from '../stores/GameStore';
 
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 
 /**  Classe représentant l'ensemble du jeu */
 class Game extends React.Component {
@@ -35,7 +36,7 @@ class Game extends React.Component {
         this.state = {
             isGameEnded: false,
             havePlayersWon: false,
-            showModal: false
+            showModal: true
         };
 
         this.onChange = this.onChange.bind(this);
@@ -119,7 +120,7 @@ class Game extends React.Component {
             },
             modal_title: {
                 textAlign: "center",
-                color: this.state.havePlayersWon ? 'green' : 'red'
+                color: ( this.state.isGameEnded ) ? ( ( this.state.havePlayersWon ) ? 'green' : 'red' ) : 'green'
             }
         };
 
@@ -146,7 +147,33 @@ class Game extends React.Component {
                           L'ensemble de la population semble condamné... Nous ne sommes pas en mesure de savoir combien de temps cela prendra, mais le manque d'antidote est un réel problème... <br />
                           N'abandonnez pas la France, nous pouvons retenter de vaincre de nouveaux virus avant que la population entière ne s'éteigne... !</p>;
             }
+        } else {
+            // Initialisation du contenu de la modale initiale
+            title = "À L'AUBE D'UNE NOUVELLE AVENTURE...";
+            text = <div>Vous voilà enfin depuis le temps ! La situation est urgente, nous vous avions prévenus, les virus
+                {GameConstants.VIRUS_A} et {GameConstants.VIRUS_B} ont déjà commencé à sévir ! <br /><br />
+                      Voici quelques précautions de base que vous devez savoir avant même de commencer à essayer de trouver les antidotes :
+                      <ul>
+                          <li>Vous n'avez que <strong>{GameConstants.NB_ACTIONS} actions par tour</strong> et les virus, eux, ne cessent de se propager !
+                              Chacun de vous doit participer, la cohésion du groupe est primordiale ! Vous pouvez donc pour une action :
+                              <ul>
+                                  <li>Vous déplacer d'une ville à une autre ville directement liée</li>
+                                  <li>Échanger la carte d'une ville où vous êtes tous les deux</li>
+                                  <li>Guérir un niveau de virus dans la ville où vous êtes</li>
+                                  <li>Découvrir un antidote, si vous avez {GameConstants.NB_CARD_FOR_ANTIDOTES} cartes villes du même virus et que vous êtes à Toulouse</li>
+                              </ul>
+                          </li>
+                          <li>Vous ne pouvez <strong>pas avoir plus de {GameConstants.NB_CARD_PER_PLAYER} cartes dans votre main</strong> !</li>
+                      </ul>
+                      Lors de votre aventure, n'hésitez pas à me demander si vous avez besoin d'aide...
+                      Je suis toujours disponible pour vous rappeler les règles de base, il vous suffit de cliquer sur l'icône (?) en cas de doute ! <br/><br />
+
+                      Une fois les {GameConstants.NB_VIRUS} antidotes trouvés, nous pourrons considérer que la France sera sauvée... <br /><br />
+
+                      Bon courage... Nous comptons TOUS sur vous !
+                    </div>;
         }
+
 
         return (
             <div>
@@ -177,13 +204,14 @@ class Game extends React.Component {
                         <Modal.Title id="contained-modal-title-lg" style={styles.modal_title}>{title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>{text}</p>
+                        {text}
                     </Modal.Body>
                     <Modal.Footer>
                         {extraButton}
                         <Button onClick={this.hideModal}>Fermer</Button>
                     </Modal.Footer>
                 </Modal>
+                <Button bsStyle="info"><Glyphicon glyph="question-sign" /> Aide</Button>
             </div>
         );
     }
