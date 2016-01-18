@@ -34,7 +34,7 @@ export default {
 
         // Ajout de la ville initiale à chacun des joueurs et d'une propriété de selection
         for (let player of players) {
-            player.cityName = "Toulouse";
+            player.cityName = GameConstants.START_CITY;
             player.selected = false;
         }
 

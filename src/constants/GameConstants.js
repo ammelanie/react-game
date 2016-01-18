@@ -22,6 +22,7 @@ export const GameConstants = {
     PROPAGATION_INCREASE: 1,
     EPIDEMIC_INCREASE: 3,
     MAX_ECLOSIONS: 5,
+    START_CITY: "Toulouse",
 
     // Actions
     TOGGLE_PATHS: "toggle_paths",
