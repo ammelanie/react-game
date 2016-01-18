@@ -614,6 +614,14 @@ class GameStore extends EventEmitter {
         return this._antidotes[virusName];
     }
 
+    /**
+     * Permet de savoir si les antidotes peuvent être découvert
+     * Condition : être sur la ville de départ du jeu
+     * @returns {boolean}
+     */
+    canAntidotesBeDiscovered() {
+        return this.getSelectedPlayer().cityName === GameConstants.START_CITY;
+    }
 
 
     /********************************************

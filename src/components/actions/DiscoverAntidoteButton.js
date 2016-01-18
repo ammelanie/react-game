@@ -26,6 +26,7 @@ class DiscoverAntidoteButton extends React.Component {
         this.state = {disabled: false};
 
         this.onChange = this.onChange.bind(this);
+        this.onPlayerChangePosition = this.onPlayerChangePosition.bind(this);
     }
 
     /**
@@ -47,11 +48,20 @@ class DiscoverAntidoteButton extends React.Component {
     }
 
     /**
+     * Callback appelé lorsqu'un changement est émit par le store au niveau du déplacement d'un joueur
+     * Va activer/désactiver le bouton de découverte d'un antidote en fonction de la ville du joueur
+     */
+    onPlayerChangePosition() {
+        this.setState({disabled: !GameStore.canAntidotesBeDiscovered()});
+    }
+
+    /**
      * Callback déclenché lorsque le composant est monté
      * Ajout d'un listener sur le store
      */
     componentDidMount() {
         GameStore.addChangeListener(GameConstants.DISCOVER_ANTIDOTE_EVENT, this.onChange);
+        GameStore.addChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onPlayerChangePosition);
     }
 
     /**
@@ -60,6 +70,7 @@ class DiscoverAntidoteButton extends React.Component {
      */
     componentWillUnmount() {
         GameStore.removeChangeListener(GameConstants.DISCOVER_ANTIDOTE_EVENT, this.onChange);
+        GameStore.addChangeListener(GameConstants.PLAYERS_CHANGE_EVENT, this.onPlayerChangePosition);
     }
 
     /**
