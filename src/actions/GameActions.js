@@ -102,8 +102,10 @@ export default {
 
             var data = message.data.split('/');
             var newCityName = data[1];
-
-            self.movePlayerToCity(newCityName, data[2]);
+            var playerName = data[2];
+            
+            self.activatePlayer(playerName);
+            self.movePlayerToCity(newCityName, playerName);
         };
     }
 }

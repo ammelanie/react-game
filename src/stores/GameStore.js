@@ -171,10 +171,18 @@ class GameStore extends EventEmitter {
         if (currentPlayer === null)
             return;
 
-        console.info("Déplacement du joueur " + currentPlayer.name + " vers la ville " + cityName);
+        var currentPlayerName = "";
+
+        // Récupération du nom du joueur à partir de l'objet joueur ou de son nom directement
+        if (typeof currentPlayer === 'object')
+            currentPlayerName = currentPlayer.name;
+        else
+            currentPlayerName = currentPlayer;
+
+        console.info("Déplacement du joueur " + currentPlayerName + " vers la ville " + cityName);
 
         for (let player of this._players) {
-            if (player.name === currentPlayer.name) {
+            if (player.name === currentPlayerName) {
                 player.cityName = cityName;
             }
         }

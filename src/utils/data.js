@@ -21,10 +21,10 @@ export default {
     players() {
         var players = [
             {
-                name: "Joueur 1",
+                name: "PION_BLANC_1",
                 color: "white"
             }, {
-                name: "Joueur 2",
+                name: "PION_NOIR_2",
                 color: "black"
             }
         ];

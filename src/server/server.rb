@@ -22,15 +22,17 @@ EM.run {
       # Mapping entre l'identifiant reçu et le nom de ville attendu par l'application
       data = msg.split '/'
 
-      sourceCityName = @cities[data[0].to_i - 1]
-      targetCityName = @cities[data[1].to_i - 1]
+      if data.length == 3
+          sourceCityName = @cities[data[1].to_i - 1]
+          targetCityName = @cities[data[0].to_i - 1]
 
-      msg = "#{sourceCityName}/#{targetCityName}/#{data[2]}"
+          msg = "#{sourceCityName}/#{targetCityName}/#{data[2].split(' ')[1]}"
 
-      puts "Sending message: #{msg}"
+          puts "Sending message: #{msg}"
 
-      @clients.each do |socket|
-        socket.send msg
+          @clients.each do |socket|
+            socket.send msg
+          end
       end
     }
   end

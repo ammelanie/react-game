@@ -35,7 +35,7 @@ class Player extends React.Component {
             boxes: {
                 boxShadow: this.props.selected ? "2px 2px 2px 1px " + this.props.color : "",
                 position: "absolute",
-                top: city.coordinateY + this.props.name.split(' ')[1]*20,
+                top: city.coordinateY + this.props.name.split('_')[2]*20,
                 left: city.coordinateX + 10,
                 backgroundColor: this.props.color,
                 width: "15px",
