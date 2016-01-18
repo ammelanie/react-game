@@ -52,7 +52,8 @@ class DiscoverAntidoteButton extends React.Component {
      * Va activer/désactiver le bouton de découverte d'un antidote en fonction de la ville du joueur
      */
     onPlayerChangePosition() {
-        this.setState({disabled: !GameStore.canAntidotesBeDiscovered()});
+        if (!GameStore.hasAntidoteBeenDiscovered(this.props.name))
+            this.setState({disabled: !GameStore.canAntidotesBeDiscovered()});
     }
 
     /**
