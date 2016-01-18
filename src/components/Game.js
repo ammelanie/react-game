@@ -150,8 +150,8 @@ class Game extends React.Component {
         } else {
             // Initialisation du contenu de la modale initiale
             title = "À L'AUBE D'UNE NOUVELLE AVENTURE...";
-            text = <div>Vous voilà enfin depuis le temps ! La situation est urgente, nous vous avions prévenus, les virus
-                {GameConstants.VIRUS_A} et {GameConstants.VIRUS_B} ont déjà commencé à sévir ! <br /><br />
+            text = <div>Vous voilà enfin depuis le temps ! La situation est urgente, nous vous avions prévenus,
+                les virus {GameConstants.VIRUS_A} et {GameConstants.VIRUS_B} ont déjà commencé à sévir ! <br /><br />
                       Voici quelques précautions de base que vous devez savoir avant même de commencer à essayer de trouver les antidotes :
                       <ul>
                           <li>Vous n'avez que <strong>{GameConstants.NB_ACTIONS} actions par tour</strong> et les virus, eux, ne cessent de se propager !
