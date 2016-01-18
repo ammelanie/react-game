@@ -36,11 +36,12 @@ class Game extends React.Component {
         this.state = {
             isGameEnded: false,
             havePlayersWon: false,
-            showModal: true
+            isModalVisible: true
         };
 
         this.onChange = this.onChange.bind(this);
         this.hideModal = this.hideModal.bind(this);
+        this.showModal = this.showModal.bind(this);
     }
 
     /**
@@ -50,7 +51,7 @@ class Game extends React.Component {
     onChange() {
         this.setState({
             isGameEnded: true,
-            showModal: true,
+            isModalVisible: true,
             havePlayersWon: GameStore.getHavePlayersWon()
         });
     }
@@ -75,7 +76,14 @@ class Game extends React.Component {
      * Changement d'état permettant la fermeture de la modale
      */
     hideModal() {
-        this.setState({showModal: false});
+        this.setState({isModalVisible: false});
+    }
+
+    /**
+     * Changement d'état permettant l'ouverture de la modale
+     */
+    showModal() {
+        this.setState({isModalVisible: true});
     }
 
     /**
@@ -180,6 +188,7 @@ class Game extends React.Component {
                 {overlay}
                 <div style={styles.action_bar}>
                     <ActionBar />
+                    <Button onClick={this.showModal} bsStyle="info"><Glyphicon glyph="question-sign" /> Aide</Button>
                 </div>
                 <div style={styles.map}>
                     <svg id="game-container" width={GameConstants.WIDTH_MAP} height={GameConstants.HEIGHT_MAP}>
@@ -195,7 +204,7 @@ class Game extends React.Component {
                 </div>
 
                 <Modal
-                    show={this.state.showModal}
+                    show={this.state.isModalVisible}
                     onHide={this.hideModal}
                     dialogClassName="custom-modal"
                     bsSize="large"
@@ -211,7 +220,6 @@ class Game extends React.Component {
                         <Button onClick={this.hideModal}>Fermer</Button>
                     </Modal.Footer>
                 </Modal>
-                <Button bsStyle="info"><Glyphicon glyph="question-sign" /> Aide</Button>
             </div>
         );
     }
