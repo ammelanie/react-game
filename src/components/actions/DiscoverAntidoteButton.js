@@ -12,6 +12,9 @@ import GameStore from '../../stores/GameStore';
 
 import ButtonAction from './ButtonAction';
 
+import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
 /**  Classe représentant un bouton d'antidote pour un virus */
 class DiscoverAntidoteButton extends React.Component {
 
@@ -23,20 +26,38 @@ class DiscoverAntidoteButton extends React.Component {
         super(props);
 
         // Ajout de l'état d'activation du bouton en tant qu'état
-        this.state = {disabled: false};
+        this.state = {
+            disabled: false,
+            isModalVisible: false
+        };
 
         this.onChange = this.onChange.bind(this);
         this.onPlayerChangePosition = this.onPlayerChangePosition.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.discoverAntidoteForVirus = this.discoverAntidoteForVirus.bind(this);
     }
 
     /**
-     * Callback du clic sur le bouton
+     * Permet de lancer la découverte d'un antidote, pour un virus donné
      */
-    handleClick() {
-        if ( confirm('Afin de détenir un antidote pour un virus il vous faut 5 cartes villes de cette même couleur. ' +
-            'Êtes-vous sûrs de vouloir confirmer ?') ) {
-            GameActions.discoverAntidoteForVirus(this.props.name);
-        }
+    discoverAntidoteForVirus() {
+        GameActions.discoverAntidoteForVirus(this.props.name);
+        this.hideModal();
+    }
+
+    /**
+     * Changement d'état permettant la fermeture de la modale
+     */
+    hideModal() {
+        this.setState({isModalVisible: false});
+    }
+
+    /**
+     * Changement d'état permettant l'ouverture de la modale
+     */
+    showModal() {
+        this.setState({isModalVisible: true});
     }
 
     /**
@@ -80,13 +101,37 @@ class DiscoverAntidoteButton extends React.Component {
      */
     render() {
 
+        var title = "Découverte de l'antidote pour le virus " + this.props.name;
+        var text = <p>Alors, comme ça vous avez trouvé tous les éléments nécessaires à la création de l'antidote pour le virus {this.props.name} ? <br />
+                      N'oubliez pas qu'il vous faut {GameConstants.NB_CARD_FOR_ANTIDOTES} cartes villes de la couleur du virus pour pouvoir trouver un anditote ! <br />
+                      Êtes-vous sûr de bien les avoir ? L'avenir de la France en dépend ! </p>;
+
         return (
-            <ButtonAction
-                text={"Antidote pour le virus " + this.props.name + " trouvé"}
-                backgroundColor={GameConstants.VIRUS_A === this.props.name ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR}
-                disabled={this.state.disabled}
-                onClickEvent={this.handleClick.bind(this)}
-            />
+            <div>
+                <ButtonAction
+                    text={"Antidote pour le virus " + this.props.name + " trouvé"}
+                    backgroundColor={GameConstants.VIRUS_A === this.props.name ? GameConstants.VIRUS_A_COLOR : GameConstants.VIRUS_B_COLOR}
+                    disabled={this.state.disabled}
+                    onClickEvent={this.showModal}
+                />
+                <Modal
+                    show={this.state.isModalVisible}
+                    onHide={this.hideModal}
+                    dialogClassName="custom-modal"
+                    bsSize="large"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-lg">{title}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {text}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button bsStyle="danger" onClick={this.hideModal}>Hum, en fait, il me manque quelque chose...</Button>
+                        <Button bsStyle="success" onClick={this.discoverAntidoteForVirus}>J'ai tout ce qu'il me faut</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         )
     }
 }
