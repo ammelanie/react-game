@@ -433,6 +433,9 @@ class GameStore extends EventEmitter {
         console.info("Nouvelle épidémie - épidémie n°" + this._numberOfEpidemicGetted);
         this._news.push("Nouvelle épidémie !");
 
+        this.audioEpidemic = new Audio(GameConstants.AUDIO_PATH + 'epidemic.mp3');
+        this.audioEpidemic.play();
+
         var cityToInfectData;
         var cityToInfect;
 

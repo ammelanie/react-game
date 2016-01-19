@@ -23,6 +23,7 @@ export const GameConstants = {
     EPIDEMIC_INCREASE: 3,
     MAX_ECLOSIONS: 5,
     START_CITY: "Toulouse",
+    AUDIO_PATH: "/resources/audio/",
 
     // Actions
     TOGGLE_PATHS: "toggle_paths",

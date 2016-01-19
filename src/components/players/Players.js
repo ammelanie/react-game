@@ -28,6 +28,8 @@ class Players extends React.Component {
         this.state = {players: GameStore.getAllPlayers()};
 
         this.onChange = this.onChange.bind(this);
+
+        this.audioPlayerMoved = new Audio(GameConstants.AUDIO_PATH + 'player_moved.mp3');
     }
 
     /**
@@ -36,6 +38,8 @@ class Players extends React.Component {
      */
     onChange() {
         this.setState({ players: GameStore.getAllPlayers() });
+        this.audioPlayerMoved.play();
+
     }
 
     /**

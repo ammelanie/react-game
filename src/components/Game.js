@@ -42,6 +42,12 @@ class Game extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.showModal = this.showModal.bind(this);
+
+        // Instanciation des sons
+        this.audioIntro = new Audio(GameConstants.AUDIO_PATH + 'intro.mp3');
+        this.audioWin = new Audio(GameConstants.AUDIO_PATH + 'win.mp3');
+        this.audioLose = new Audio(GameConstants.AUDIO_PATH + 'lose.mp3');
+
     }
 
     /**
@@ -61,6 +67,8 @@ class Game extends React.Component {
      * Initialisation du plateau de jeu
      */
     componentDidMount() {
+        this.audioIntro.play();
+
         GameActions.initGame();
         GameStore.addChangeListener(GameConstants.GAME_CHANGE_EVENT, this.onChange);
     }
@@ -148,12 +156,14 @@ class Game extends React.Component {
                          Vous avez réussi à récolter l'ensemble des éléments permettant de réaliser les antidotes, le peuple vous en est reconnaissant ! <br />
                          Les différents cas déjà contaminés seront prochainement guérris. À l'aide du vaccin, aucun nouveau cas ne devrait se manifester ! <br />
                          N'oubliez pas que nous ne sommes pas à l'abri d'autres virus... Venez sauver la France quand vous le souhaitez !</p>;
+                this.audioWin.play();
             } else {
                 title = "DEFAITE...";
                 text = <p>Comment ? Vous-êtes sûrs ?! Hum, il semblerait que les virus {GameConstants.VIRUS_A} et {GameConstants.VIRUS_B} soient plus virulents que jamais... <br /><br />
                           Vous n'êtes pas venus au bout de votre mission, la propagation est incroyable ! <br />
                           L'ensemble de la population semble condamné... Nous ne sommes pas en mesure de savoir combien de temps cela prendra, mais le manque d'antidote est un réel problème... <br />
                           N'abandonnez pas la France, nous pouvons retenter de vaincre de nouveaux virus avant que la population entière ne s'éteigne... !</p>;
+                this.audioLose.play();
             }
         } else {
             // Initialisation du contenu de la modale initiale
