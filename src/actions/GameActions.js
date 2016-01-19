@@ -49,12 +49,13 @@ export default {
      */
     movePlayerToCity(cityName, playerName) {
         GameDispatcher.dispatch({
+            type: GameConstants.VIRUS_PROPAGATION,
+            cityName: cityName
+        });
+        GameDispatcher.dispatch({
             type: GameConstants.MOVE_PLAYER,
             cityName: cityName,
             playerName: playerName
-        });
-        GameDispatcher.dispatch({
-            type: GameConstants.VIRUS_PROPAGATION
         });
     },
 

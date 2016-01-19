@@ -363,8 +363,8 @@ class GameStore extends EventEmitter {
      *  - une propagation classique : infection d'une ville avec un cran de virus
      *  - une épidémie : récupération de la dernière carte de la pile : ajout de 3 virus, remise dans la pile de toutes les villes
      */
-    propagateVirus() {
-        if (this.getSelectedPlayer() === null)
+    propagateVirus(cityName) {
+        if (this.getSelectedPlayer() === null || cityName === this.getSelectedPlayer().cityName)
             return;
 
         console.info("Niveau de propagation : " + this._propagationVirusLevel);
@@ -742,7 +742,7 @@ GameDispatcher.register((action) => {
 
         // Lancement d'une propagation de virus
         case GameConstants.VIRUS_PROPAGATION:
-            _GameStore.propagateVirus();
+            _GameStore.propagateVirus(action.cityName);
             _GameStore.emitChange(GameConstants.CITIES_CHANGE_EVENT);
             if (_GameStore.isGameEnded())
                 _GameStore.emitChange(GameConstants.GAME_CHANGE_EVENT);
