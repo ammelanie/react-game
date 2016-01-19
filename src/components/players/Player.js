@@ -38,6 +38,7 @@ class Player extends React.Component {
                 top: city.coordinateY + this.props.name.split('_')[2]*20,
                 left: city.coordinateX + 10,
                 backgroundColor: this.props.color,
+                border: "1px solid black",
                 width: "15px",
                 height: "15px"
             }
