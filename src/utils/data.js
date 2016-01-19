@@ -109,19 +109,19 @@ export default {
                     coordinateY: 220,
                     canBeInfected: true
             },
-            "A": {canBeInfected: false},
-            "B": {canBeInfected: false},
-            "C": {canBeInfected: false},
-            "D": {canBeInfected: false},
-            "E": {canBeInfected: false},
-            "F": {canBeInfected: false},
-            "G": {canBeInfected: false},
-            "H": {canBeInfected: false},
-            "I": {canBeInfected: false},
-            "J": {canBeInfected: false},
-            "K": {canBeInfected: false},
-            "L": {canBeInfected: false},
-            "M": {canBeInfected: false}
+            "Troyes": {canBeInfected: false},
+            "Montpellier": {canBeInfected: false},
+            "Metz": {canBeInfected: false},
+            "Verdun": {canBeInfected: false},
+            "Chantilly": {canBeInfected: false},
+            "Annecy": {canBeInfected: false},
+            "Belfort": {canBeInfected: false},
+            "Brest": {canBeInfected: false},
+            "Caen": {canBeInfected: false},
+            "Nice": {canBeInfected: false},
+            "Grenoble": {canBeInfected: false},
+            "Poitiers": {canBeInfected: false},
+            "Reims": {canBeInfected: false}
         };
 
         // Ajout de la notion de virus pour les 13 principales villes, pouvant être infectés
