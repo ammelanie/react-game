@@ -171,8 +171,12 @@ class Game extends React.Component {
                                   <li>Découvrir un antidote, si vous avez {GameConstants.NB_CARD_FOR_ANTIDOTES} cartes villes du même virus et que vous êtes à Toulouse</li>
                               </ul>
                           </li>
-                          <li>Vous ne pouvez <strong>pas avoir plus de {GameConstants.NB_CARD_PER_PLAYER} cartes dans votre main</strong> !</li>
+                          <li>Vous devez <strong>piocher 2 cartes après votre tour</strong>, afin de récolter des éléments permettant de trouver les antidotes</li>
+                          <li>Vous ne pouvez <strong>pas avoir plus de {GameConstants.NB_CARD_PER_PLAYER} cartes dans votre main</strong>, défaussez-vous intelligemment ! !</li>
                       </ul>
+
+                      N'oubliez pas, le but est de se concentrer sur les capitales des nouvelles régions ! <br />
+
                       Lors de votre aventure, n'hésitez pas à me demander si vous avez besoin d'aide...
                       Je suis toujours disponible pour vous rappeler les règles de base, il vous suffit de cliquer sur l'icône (?) en cas de doute ! <br/><br />
 
