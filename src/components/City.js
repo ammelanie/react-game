@@ -12,13 +12,6 @@ import GameActions from '../actions/GameActions';
 class City extends React.Component {
 
     /**
-     * Callback du clic sur une ville
-     */
-    handleClick() {
-        GameActions.movePlayerToCity(this.props.name);
-    }
-
-    /**
      * La vue correspond à la ville souhaitée
      * @returns {ReactElement}
      */
@@ -26,7 +19,6 @@ class City extends React.Component {
         return (
             <g>
                 <circle
-                    onClick={this.handleClick.bind(this)}
                     r={this.props.r}
                     cx={this.props.cx}
                     cy={this.props.cy}

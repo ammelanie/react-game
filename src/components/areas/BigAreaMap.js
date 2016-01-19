@@ -11,10 +11,19 @@ import City from '../City';
 
 import GameStore from '../../stores/GameStore';
 
+import GameActions from '../../actions/GameActions';
+
 /**
  * Classe représentant une nouvelle région de France
  */
 class BigAreaMap extends React.Component {
+
+    /**
+     * Callback du clic sur une ville
+     */
+    handleClick() {
+        GameActions.movePlayerToCity(this.props.capital);
+    }
 
     /**
      * La vue correspond aux nouvelles régions, composés de l'ensemble des petites régions, de la ville capitale et des chemins
@@ -47,7 +56,7 @@ class BigAreaMap extends React.Component {
         var capital = GameStore.findCityByName(this.props.capital);
 
         return (
-            <g>
+            <g onClick={this.handleClick.bind(this)}>
                 {areas}
                 <City
                     cx={capital.coordinateX}
