@@ -169,7 +169,7 @@ class Game extends React.Component {
             // Initialisation du contenu de la modale initiale
             title = "À L'AUBE D'UNE NOUVELLE AVENTURE...";
             text = <div>Vous voilà enfin depuis le temps ! La situation est urgente, nous vous avions prévenus,
-                les virus {GameConstants.VIRUS_A} et {GameConstants.VIRUS_B} ont déjà commencé à sévir ! <br /><br />
+                les virus <strong>{GameConstants.VIRUS_A}</strong> et <strong>{GameConstants.VIRUS_B}</strong> ont déjà commencé à sévir ! <br /><br />
                       Voici quelques précautions de base que vous devez savoir avant même de commencer à essayer de trouver les antidotes :
                       <ul>
                           <li>Vous n'avez que <strong>{GameConstants.NB_ACTIONS} actions par tour</strong> et les virus, eux, ne cessent de se propager !
@@ -182,10 +182,10 @@ class Game extends React.Component {
                               </ul>
                           </li>
                           <li>Vous devez <strong>piocher 2 cartes après votre tour</strong>, afin de récolter des éléments permettant de trouver les antidotes</li>
-                          <li>Vous ne pouvez <strong>pas avoir plus de {GameConstants.NB_CARD_PER_PLAYER} cartes dans votre main</strong>, défaussez-vous intelligemment ! !</li>
+                          <li>Vous ne pouvez <strong>pas avoir plus de {GameConstants.NB_CARD_PER_PLAYER} cartes dans votre main</strong>, défaussez-vous intelligemment !</li>
                       </ul>
 
-                      N'oubliez pas, le but est de se concentrer sur les capitales des nouvelles régions ! <br />
+                      N'oubliez pas, le but est de se concentrer sur les capitales des nouvelles régions ! <br /><br />
 
                       Lors de votre aventure, n'hésitez pas à me demander si vous avez besoin d'aide...
                       Je suis toujours disponible pour vous rappeler les règles de base, il vous suffit de cliquer sur l'icône (?) en cas de doute ! <br/><br />
