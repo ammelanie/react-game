@@ -103,7 +103,7 @@ class DiscoverAntidoteButton extends React.Component {
 
         var title = "Découverte de l'antidote pour le virus " + this.props.name;
         var text = <p>Alors, comme ça vous avez trouvé tous les éléments nécessaires à la création de l'antidote pour le virus {this.props.name} ? <br />
-                      N'oubliez pas qu'il vous faut {GameConstants.NB_CARD_FOR_ANTIDOTES} cartes villes de la couleur du virus pour pouvoir trouver un anditote ! <br />
+                      N'oubliez pas qu'il vous faut <strong>{GameConstants.NB_CARD_FOR_ANTIDOTES} cartes villes de la couleur du virus</strong> pour pouvoir trouver un anditote ! <br />
                       Êtes-vous sûr de bien les avoir ? L'avenir de la France en dépend ! </p>;
 
         return (
